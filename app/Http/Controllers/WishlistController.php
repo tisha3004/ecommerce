@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Wishlist;
+
 class WishlistController extends Controller
 {
     protected $product=null;
@@ -54,5 +56,5 @@ class WishlistController extends Controller
         }
         request()->session()->flash('error','Error please try again');
         return back();       
-    }     
+    } 
 }

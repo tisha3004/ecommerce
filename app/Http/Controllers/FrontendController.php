@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+
 use App\Models\Banner;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\PostTag;
 use App\Models\PostCategory;
 use App\Models\Post;
-use App\Models\Cart;
 use App\Models\Brand;
 use App\User;
 use Auth;
@@ -17,8 +18,10 @@ use DB;
 use Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+
 class FrontendController extends Controller
 {
+    
    
     public function index(Request $request){
         return redirect()->route($request->user()->role);
@@ -331,7 +334,7 @@ class FrontendController extends Controller
         return redirect()->route('blog',$catURL.$tagURL);
     }
 
-    public function blogByCategory(Request $request){
+    public static function blogByCategory(Request $request){
         $post=PostCategory::getBlogByCategory($request->slug);
         $rcnt_post=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
         return view('frontend.pages.blog')->with('posts',$post->post)->with('recent_posts',$rcnt_post);
@@ -422,5 +425,5 @@ class FrontendController extends Controller
                 return back();
             }
     }
-    
+
 }

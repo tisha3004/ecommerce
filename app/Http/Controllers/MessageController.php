@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Events\MessageSent;
+
 class MessageController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -125,4 +128,5 @@ class MessageController extends Controller
         }
         return back();
     }
+
 }

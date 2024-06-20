@@ -8,9 +8,10 @@ use Notification;
 use App\User;
 use App\Notifications\StatusNotification;
 use App\Models\PostComment;
+
 class PostCommentController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

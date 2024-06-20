@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Models\Cart;
+
 class CouponController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -154,4 +157,5 @@ class CouponController extends Controller
             return redirect()->back();
         }
     }
+
 }

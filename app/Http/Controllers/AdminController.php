@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 use App\User;
+use App\Admin;
 use App\Rules\MatchOldPassword;
 use Hash;
 use Carbon\Carbon;
@@ -108,10 +109,4 @@ class AdminController extends Controller
     //  return $data;
      return view('backend.index')->with('course', json_encode($array));
     }
-
-    // public function activity(){
-    //     return Activity::all();
-    //     $activity= Activity::all();
-    //     return view('backend.layouts.activity')->with('activities',$activity);
-    // }
 }

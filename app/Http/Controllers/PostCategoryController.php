@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PostCategory;
 use Illuminate\Support\Str;
+
 class PostCategoryController extends Controller
 {
     /**

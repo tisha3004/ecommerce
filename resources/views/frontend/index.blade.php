@@ -205,6 +205,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="owl-carousel popular-slider">
+                      @php
+                        $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(6)->get();
+                    @endphp
                     @foreach($product_lists as $product)
                         @if($product->condition=='hot')
                             <!-- Start Single Product -->

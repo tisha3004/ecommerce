@@ -8,9 +8,10 @@ use Notification;
 use App\Notifications\StatusNotification;
 use App\User;
 use App\Models\ProductReview;
+
 class ProductReviewController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
