@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Ecommerce Laravel || Brand Create')
+@section('title','Ecommerce  || Brand Create')
 @section('main-content')
 
 <div class="card">

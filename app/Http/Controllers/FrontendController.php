@@ -10,7 +10,7 @@ use App\Models\PostTag;
 use App\Models\PostCategory;
 use App\Models\Post;
 use App\Models\Brand;
-use App\User;
+use App\Models\User;
 use Auth;
 use Session;
 use Newsletter;
@@ -360,7 +360,7 @@ class FrontendController extends Controller
             return redirect()->route('home');
         }
         else{
-            request()->session()->flash('error','Invalid email and password pleas try again!');
+            request()->session()->flash('error','Invalid email and password please try again!');
             return redirect()->back();
         }
     }

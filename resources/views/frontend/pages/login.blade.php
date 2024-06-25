@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','Ecommerce Laravel || Login Page')
+@section('title','Ecommerce  || Login Page')
 
 @section('main-content')
     <!-- Breadcrumbs -->
@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="bread-inner">
                         <ul class="bread-list">
-                            <li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
+                            <li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
                             <li class="active"><a href="javascript:void(0);">Login</a></li>
                         </ul>
                     </div>
@@ -63,10 +63,10 @@
                                         <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Remember me</label>
                                     </div>
                                     @if (Route::has('password.request'))
-                                        <!-- <a class="lost-pass" href="{{ route('password.reset') }}">
+                                         <a class="lost-pass" href="{{ route('password.reset') }}">
                                             Lost your password?
-                                        </a> -->
-                                    @endif
+                                        </a>
+                                    @endif 
                                 </div>
                             </div>
                         </form>

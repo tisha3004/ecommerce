@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title','Ecommerce Laravel || HOME PAGE')
+@section('title','Ecommerce || HOME PAGE')
 @section('main-content')
 <!-- Slider Area -->
 @if(count($banners)>0)

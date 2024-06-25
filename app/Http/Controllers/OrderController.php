@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Shipping;
-use App\User;
+use App\Models\User;
 use PDF;
 use Notification;
 use Helper;

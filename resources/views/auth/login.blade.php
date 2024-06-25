@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Ecommerce Laravel - Login Panel</title>
+  <title>Ecommerce  - Login Panel</title>
   @include('backend.layouts.head')
 
 </head>

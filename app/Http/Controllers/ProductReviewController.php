@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Notification;
 use App\Notifications\StatusNotification;
-use App\User;
+use App\Models\User;
 use App\Models\ProductReview;
 
 class ProductReviewController extends Controller
