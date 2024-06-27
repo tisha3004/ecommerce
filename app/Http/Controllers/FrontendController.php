@@ -357,7 +357,7 @@ class FrontendController extends Controller
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
             Session::put('user',$data['email']);
             request()->session()->flash('success','Logged in successfully!');
-            return redirect()->route('home');
+            return redirect()->route('home1');
         }
         else{
             request()->session()->flash('error','Invalid email and password please try again!');
@@ -388,7 +388,7 @@ class FrontendController extends Controller
         Session::put('user',$data['email']);
         if($check){
             request()->session()->flash('success','Registered successfully');
-            return redirect()->route('home');
+            return redirect()->route('home1');
         }
         else{
             request()->session()->flash('error','Please try again!');
@@ -407,13 +407,13 @@ class FrontendController extends Controller
     public function showResetForm(){
         return view('auth.passwords.old-reset');
     }
-
+/* 
     public function subscribe(Request $request){
         if(! Newsletter::isSubscribed($request->email)){
                 Newsletter::subscribePending($request->email);
                 if(Newsletter::lastActionSucceeded()){
                     request()->session()->flash('success','Subscribed! Please check your email');
-                    return redirect()->route('home');
+                    return redirect()->route('home1');
                 }
                 else{
                     Newsletter::getLastError();
@@ -424,6 +424,7 @@ class FrontendController extends Controller
                 request()->session()->flash('error','Already Subscribed');
                 return back();
             }
-    }
+    }  */
 
 }
+    

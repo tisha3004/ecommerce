@@ -394,6 +394,7 @@
                 },
                 success:function(response){
                     console.log(response);
+					addToCart();
 					if(typeof(response)!='object'){
 						response=$.parseJSON(response);
 					}
@@ -408,6 +409,30 @@
 						}); 
                     }
                 }
+				function addToCart() {
+            fetch('/add-to-cart/{{ $product->id }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated === false) {
+                    // Dispatch custom event to show notification
+                    window.dispatchEvent(new CustomEvent('show-notification', {
+                        detail: { message: data.message }
+                    }));
+                } else {
+                    // Handle successful add to cart
+                    console.log('Product added to cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
             })
         });
 	</script> --}}

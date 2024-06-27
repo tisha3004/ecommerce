@@ -274,9 +274,7 @@ Version:1.0
 .shop-services .single-service {
 	padding: 12px 0 12px 65px;
 }
-.shop-newsletter .newsletter-inner input {
-	width: 380px;
-}
+
 .shop-blog.grid .shop-single-blog {
 	margin-top:0px;
 }
@@ -790,23 +788,8 @@ Version:1.0
 .shop-services.home {
 	padding: 25px 0;
 }
-.shop-newsletter .newsletter-inner input {
-	width: 330px;
-	height: 42px;
-	padding:0 20px;
-	border-radius: 30px;
-	margin-bottom: 10px;
-	display:block;
-	text-align:center;
-}
-.shop-newsletter .newsletter-inner .btn {
-	height: 42px;
-	padding: 10px 15px;
-	width: 330px;
-	border-radius: 30px;
-	left:0;
-	display:block;
-}
+
+
 .shop-blog .shop-single-blog .content {
 	padding: 28px;
 }
@@ -1393,23 +1376,8 @@ Version:1.0
 .shop-services.home {
 	padding: 25px 0;
 }
-.shop-newsletter .newsletter-inner input {
-	width: 100%;
-	height: 42px;
-	padding: 0 12px 0 15px;
-	border-radius: 30px;
-	margin-bottom: 10px;
-	display:block;
-	text-align:center;
-}
-.shop-newsletter .newsletter-inner .btn {
-	height: 42px;
-	padding: 10px 15px;
-	width: 100%;
-	border-radius: 30px;
-	left:0;
-	display:block;
-}
+
+
 .shop-blog .shop-single-blog .content {
 	padding: 28px;
 }

@@ -134,7 +134,7 @@
                         </div>
                         <!--/ End Single Widget -->
                         <!-- Single Widget -->
-                        <div class="single-widget newsletter">
+                        <!-- <div class="single-widget newsletter">
                             <h3 class="title">Newslatter</h3>
                             <div class="letter-inner">
                                 <h4>Subscribe & get news <br> latest updates.</h4>
@@ -144,7 +144,7 @@
                                     <button type="submit" class="btn " style="width: 100%">Submit</button>
                                 </form>
                             </div>
-                        </div>
+                        </div> -->
                         <!--/ End Single Widget -->
                     </div>
                 </div>

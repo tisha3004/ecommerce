@@ -23,6 +23,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\CheckUserSession;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Auth::routes(['register'=>false]);
+Auth::routes(['register' => false]);
 
 Route::get('user/login', [FrontendController::class, 'login'])->name('login.form');
 Route::post('user/login', [FrontendController::class, 'loginSubmit'])->name('login.submit');
@@ -44,14 +46,15 @@ Route::get('user/logout', [FrontendController::class, 'logout'])->name('user.log
 Route::get('user/register', [FrontendController::class, 'register'])->name('register.form');
 Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
 
-// Reset password route (uncomment and correct if necessary)
- Route::post('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset'); 
+// Reset password route
+Route::get('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset');
+Route::post('password-reset', [FrontendController::class, 'ResetPassword'])->name('password.reset');
 
 // Socialite
 Route::get('login/{provider}/', [LoginController::class, 'redirect'])->name('login.redirect');
 Route::get('login/{provider}/callback/', [LoginController::class, 'Callback'])->name('login.callback');
 
-Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/', [FrontendController::class, 'home'])->name('home1');
 Route::get('/home', [FrontendController::class, 'index']);
 
 // Frontend Routes
@@ -65,8 +68,8 @@ Route::get('/product-sub-cat/{slug}/{sub_slug}', [FrontendController::class, 'pr
 Route::get('/product-brand/{slug}', [FrontendController::class, 'productBrand'])->name('product-brand');
 
 // Cart section
-Route::get('/add-to-cart/{slug}', [CartController::class, 'addToCart'])->name('add-to-cart')->middleware('user');
-Route::post('/add-to-cart', [CartController::class, 'singleAddToCart'])->name('single-add-to-cart')->middleware('user');
+Route::get('/add-to-cart/{slug}', [CartController::class, 'addToCart'])->name('add-to-cart')->middleware(CheckUserSession::class);
+Route::post('/add-to-cart', [CartController::class, 'singleAddToCart'])->name('single-add-to-cart')->middleware(CheckUserSession::class);
 Route::get('cart-delete/{id}', [CartController::class, 'cartDelete'])->name('cart-delete');
 Route::post('cart-update', [CartController::class, 'cartUpdate'])->name('cart.update');
 
@@ -74,23 +77,22 @@ Route::get('/cart', function () {
     return view('frontend.pages.cart');
 })->name('cart');
 
-Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('user');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware(CheckUserSession::class);
 
 // Wishlist
 Route::get('/wishlist', function () {
     return view('frontend.pages.wishlist');
 })->name('wishlist');
-Route::get('/wishlist/{slug}', [WishlistController::class, 'wishlist'])->name('add-to-wishlist')->middleware('user');
+Route::get('/wishlist/{slug}', [WishlistController::class, 'wishlist'])->name('add-to-wishlist')->middleware(CheckUserSession::class);
 Route::get('wishlist-delete/{id}', [WishlistController::class, 'wishlistDelete'])->name('wishlist-delete');
 
 Route::post('cart/order', [OrderController::class, 'store'])->name('cart.order');
 Route::get('order/pdf/{id}', [OrderController::class, 'pdf'])->name('order.pdf');
 Route::get('/income', [OrderController::class, 'incomeChart'])->name('product.order.income');
 
-// Route::get('/user/chart','AdminController@userPieChart')->name('user.piechart');
 Route::get('/product-grids', [FrontendController::class, 'productGrids'])->name('product-grids');
 Route::get('/product-lists', [FrontendController::class, 'productLists'])->name('product-lists');
-Route::match(['get','post'], '/filter', [FrontendController::class, 'productFilter'])->name('shop.filter');
+Route::match(['get', 'post'], '/filter', [FrontendController::class, 'productFilter'])->name('shop.filter');
 
 // Order Track
 Route::get('/product/track', [OrderController::class, 'orderTrack'])->name('order.track');
@@ -111,7 +113,7 @@ Route::post('/subscribe', [FrontendController::class, 'subscribe'])->name('subsc
 Route::resource('/review', ProductReviewController::class);
 Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
 
-// Post Comment 
+// Post Comment
 Route::post('post/{slug}/comment', [PostCommentController::class, 'store'])->name('post-comment.store');
 Route::resource('/comment', PostCommentController::class);
 
@@ -160,8 +162,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 });
 
 // User section start
-Route::group(['prefix' => 'user', 'middleware' => ['user']], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('user');
+Route::group(['prefix' => 'user', 'middleware' => [CheckUserSession::class]], function () {
+     Route::get('/', [HomeController::class, 'index'])->name('user');
     Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
     Route::post('/profile/{id}', [HomeController::class, 'profileUpdate'])->name('user-profile-update');
     Route::get('/order', [HomeController::class, 'orderIndex'])->name('user.order.index');
@@ -176,11 +178,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function () {
     Route::get('user-post/comment/edit/{id}', [HomeController::class, 'userCommentEdit'])->name('user.post-comment.edit');
     Route::patch('user-post/comment/update/{id}', [HomeController::class, 'userCommentUpdate'])->name('user.post-comment.update');
     Route::get('change-password', [HomeController::class, 'changePassword'])->name('user.change.password.form');
-    Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
+    Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password'); 
 });
 
+// File manager
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
+    Lfm::routes();
 });
 
 Auth::routes();

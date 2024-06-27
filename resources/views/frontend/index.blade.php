@@ -17,7 +17,7 @@
                     <div class="carousel-caption d-none d-md-block text-left">
                         <h1 class="wow fadeInDown">{{$banner->title}}</h1>
                         <p>{!! html_entity_decode($banner->description) !!}</p>
-                        <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
+                        <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" onclick="addToCart()" role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
                     </div>
                 </div>
             @endforeach
@@ -137,7 +137,7 @@
                             <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
                         </div>
                         <div class="product-action-2">
-                            <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
+                            <a title="Add to cart" onclick="addToCart()" href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -281,7 +281,7 @@
                                             // dd($photo);
                                         @endphp
                                         <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                        <a href="{{route('add-to-cart',$product->slug)}}" class="buy"><i class="fa fa-shopping-bag"></i></a>
+                                        <a href="{{route('add-to-cart',$product->slug)}}" class="buy" onclick="addToCart()"><i class="fa fa-shopping-bag"></i></a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-12 no-padding">
@@ -381,7 +381,7 @@
 </section>
 <!-- End Shop Services Area -->
 
-@include('frontend.layouts.newsletter')
+<!-- @include('frontend.layouts.newsletter') -->
 
 <!-- Modal -->
 @if($product_lists)
@@ -629,6 +629,46 @@
             }
             return false
         }
+        
+        function showNotification(message) {
+            document.getElementById('notification-message').textContent = message;
+            document.getElementById('notification').classList.remove('hidden');
+        }
+
+        function hideNotification() {
+            document.getElementById('notification').classList.add('hidden');
+        }
+
+        // Listen for custom event
+        window.addEventListener('show-notification', function(event) {
+            showNotification(event.detail.message);
+        });
+    
+        function addToCart() {
+            fetch('/add-to-cart/{{ $product->slug }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated === false) {
+                    // Dispatch custom event to show notification
+                    window.dispatchEvent(new CustomEvent('show-notification', {
+                        detail: { message: data.message }
+                    }));
+                } else {
+                    // Handle successful add to cart
+                    console.log('Product added to cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
     </script>
 
 @endpush

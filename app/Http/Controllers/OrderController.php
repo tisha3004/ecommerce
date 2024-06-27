@@ -147,7 +147,7 @@ class OrderController extends Controller
             'actionURL'=>route('order.show',$order->id),
             'fas'=>'fa-file-alt'
         ];
-        Notification::send($users, new StatusNotification($details));
+        // Notification::send($users, new StatusNotification($details));
         if(request('payment_method')=='paypal'){
             return redirect()->route('payment')->with(['id'=>$order->id]);
         }
@@ -159,7 +159,7 @@ class OrderController extends Controller
 
         // dd($users);        
         request()->session()->flash('success','Your product order has been placed. Thank you for shopping with us.');
-        return redirect()->route('home');
+        return redirect()->route('home1');
     }
 
     /**
