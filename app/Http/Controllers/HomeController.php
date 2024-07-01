@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Banner;
 use App\Models\ProductReview;
 use App\Models\PostComment;
 use App\Rules\MatchOldPassword;
@@ -56,8 +58,23 @@ class HomeController extends Controller
 
     // Order
     public function orderIndex(){
-        $orders=Order::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(10);
+        $orders=Order::orderBy('id','DESC')->paginate(10);
         return view('user.order.index')->with('orders',$orders);
+    }
+    public function orderUser(){
+        $user=User::orderBy('id','DESC')->paginate(10);
+        return view('user.noOfUser.index')->with('Users',$user);
+    }
+
+    public function paymentIndex(){
+        $payment=Order::orderBy('id','DESC')->paginate(10);
+        return view('user.payment.index')->with('payment',$payment);
+    }
+
+    public function bannerIndex(){
+        $banner=Banner::orderBy('id','DESC')->paginate(10);
+        //return $banner;
+       return view('user.banner.index')->with('Banners',$banner);
     }
     public function userOrderDelete($id)
     {
@@ -82,7 +99,30 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
-
+    public function userDelete($id)
+    {
+        $user=User::find($id);
+        if($user){
+                $status=$user->delete();
+                if($status){
+                    request()->session()->flash('success','User Successfully deleted');
+                }
+                else{
+                    request()->session()->flash('error','User can not deleted');
+                }
+                return redirect()->back();
+        }
+        else{
+            request()->session()->flash('error','User can not found');
+            return redirect()->back();
+        }
+    }
+    public function userShow($id)
+    {
+        $user=User::find($id);
+        //return $user;
+        return view('user.noOfUser.show')->with('User',$user);
+    }
     public function orderShow($id)
     {
         $order=Order::find($id);
@@ -91,8 +131,15 @@ class HomeController extends Controller
     }
     // Product Review
     public function productReviewIndex(){
-        $reviews=ProductReview::getAllUserReview();
+        $reviews=ProductReview::orderBy('id','DESC')->paginate(10);
+      //  return $reviews;
         return view('user.review.index')->with('reviews',$reviews);
+    }
+
+    public function productIndex(){
+        $product=Product::orderBy('id')->paginate(10);
+       // return $product;
+       return view('user.product.index')->with('products',$product);
     }
 
     public function productReviewEdit($id)

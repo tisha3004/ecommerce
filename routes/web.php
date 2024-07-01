@@ -162,12 +162,19 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 });
 
 // User section start
-Route::group(['prefix' => 'user', 'middleware' => [CheckUserSession::class]], function () {
+Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]], */ function () {
      Route::get('/', [HomeController::class, 'index'])->name('user');
     Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
     Route::post('/profile/{id}', [HomeController::class, 'profileUpdate'])->name('user-profile-update');
     Route::get('/order', [HomeController::class, 'orderIndex'])->name('user.order.index');
+    Route::get('/user', [HomeController::class, 'orderUser'])->name('user.noOfUser.index');
+    Route::get('/banner', [HomeController::class, 'bannerIndex'])->name('user.banner.index');
+    Route::get('/products', [HomeController::class, 'productIndex'])->name('user.product.index');
+    Route::get('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index');
+
     Route::get('/order/show/{id}', [HomeController::class, 'orderShow'])->name('user.order.show');
+    Route::get('/user/show/{id}', [HomeController::class, 'userShow'])->name('user.show');
+    Route::delete('/delete/{id}', [HomeController::class, 'userDelete'])->name('user.delete');
     Route::delete('/order/delete/{id}', [HomeController::class, 'userOrderDelete'])->name('user.order.delete');
     Route::get('/user-review', [HomeController::class, 'productReviewIndex'])->name('user.productreview.index');
     Route::delete('/user-review/delete/{id}', [HomeController::class, 'productReviewDelete'])->name('user.productreview.delete');

@@ -24,7 +24,6 @@
               <th>Qty.</th>
               <th>Charge</th>
               <th>Total</th>
-              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -39,7 +38,6 @@
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>${{$order->shipping->price}}</td>
                     <td>${{number_format($order->total_amount,2)}}</td>
                     <td>
                         @if($order->status=='new')

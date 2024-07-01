@@ -32,12 +32,32 @@
             <span>Orders</span>
         </a>
     </li>
-
+     <!--Users -->
+     <li class="nav-item">
+        <a class="nav-link" href="{{route('user.noOfUser.index')}}">
+            <i class="fas fa-hammer fa-chart-area"></i>
+            <span>Users</span>
+        </a>
+    </li>
+      <!--Banners -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('user.banner.index')}}">
+            <i class="fas fa-hammer fa-chart-area"></i>
+            <span>Banners</span>
+        </a>
+    </li>
     <!-- Reviews -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('user.productreview.index')}}">
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>
+    </li>
+
+    <!-- Product -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('user.product.index')}}">
+            <i class="fas fa-comments"></i>
+            <span>Products</span></a>
     </li>
     
 
