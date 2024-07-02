@@ -74,7 +74,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>© {{date('Y')}} Developed By Tisha Mehta -  All Rights Reserved.</p>
+								<p>© {{date('Y')}} Developed By <a href="https://www.linkedin.com/in/tisha-mehta-a9292126b/">Tisha Mehta </a> -  All Rights Reserved.</p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">

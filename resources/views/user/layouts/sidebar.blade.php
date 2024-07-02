@@ -59,7 +59,13 @@
             <i class="fas fa-comments"></i>
             <span>Products</span></a>
     </li>
-    
+      <!-- Payment -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('user.payment.index')}}">
+            <i class="fas fa-comments"></i>
+            <span>Payment</span></a>
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">

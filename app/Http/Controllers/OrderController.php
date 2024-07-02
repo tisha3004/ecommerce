@@ -251,26 +251,26 @@ class OrderController extends Controller
 
     public function productTrackOrder(Request $request){
         // return $request->all();
-        $order=Order::where('user_id',auth()->user()->id)->where('order_number',$request->order_number)->first();
+        $order=Order::where('order_number',$request->order_number)->first();
         if($order){
             if($order->status=="new"){
             request()->session()->flash('success','Your order has been placed.');
-            return redirect()->route('home');
+            return redirect()->route('home1');
 
             }
             elseif($order->status=="process"){
                 request()->session()->flash('success','Your order is currently processing.');
-                return redirect()->route('home');
+                return redirect()->route('home1');
     
             }
             elseif($order->status=="delivered"){
                 request()->session()->flash('success','Your order has been delivered. Thank you for shopping with us.');
-                return redirect()->route('home');
+                return redirect()->route('home1');
     
             }
             else{
                 request()->session()->flash('error','Sorry, your order has been canceled.');
-                return redirect()->route('home');
+                return redirect()->route('home1');
     
             }
         }
@@ -278,6 +278,7 @@ class OrderController extends Controller
             request()->session()->flash('error','Invalid order number. Please try again!');
             return back();
         }
+      // return $order;
     }
 
     // PDF generate

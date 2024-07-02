@@ -10,6 +10,7 @@ use App\Models\Banner;
 use App\Models\ProductReview;
 use App\Models\PostComment;
 use App\Rules\MatchOldPassword;
+use Carbon\Carbon;
 use Hash;
 
 class HomeController extends Controller
@@ -33,7 +34,17 @@ class HomeController extends Controller
 
 
     public function index(){
-        return view('user.index');
+           $totalOrders = Order::count();
+           $totalUsers = User::count();
+        $totalRevenue = Order::where('status', 'delivered')->sum('total_amount');
+        $monthlySales = Order::where('status', 'delivered')
+            ->whereYear('created_at', Carbon::now()->year)
+            ->selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+            ->groupBy('month')
+            ->get()
+            ->pluck('total', 'month');
+
+        return view('user.index', compact('totalOrders', 'totalRevenue', 'monthlySales','totalUsers'));
     }
 
     public function profile(){
