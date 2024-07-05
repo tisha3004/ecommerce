@@ -169,6 +169,10 @@ Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]]
     Route::get('/order', [HomeController::class, 'orderIndex'])->name('user.order.index');
     Route::get('/user', [HomeController::class, 'orderUser'])->name('user.noOfUser.index');
     Route::get('/banner', [HomeController::class, 'bannerIndex'])->name('user.banner.index');
+    Route::get('/blog', [HomeController::class, 'blogIndex'])->name('user.blog.index');
+    Route::get('/add-blog', [HomeController::class, 'addBlog'])->name('user.blog.add');
+    Route::post('/add-blog', [PostController::class, 'store'])->name('user.blog.store');
+    Route::get('/add-banner', [HomeController::class, 'addBanner'])->name('user.banner.add');
     Route::get('/products', [HomeController::class, 'productIndex'])->name('user.product.index');
     Route::get('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index');
 

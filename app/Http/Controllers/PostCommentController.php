@@ -40,9 +40,9 @@ class PostCommentController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-        $post_info=Post::getPostBySlug($request->slug);
-        // return $post_info;
+        //return $request->all();
+         $post_info=Post::getPostBySlug($request->slug);
+        //return $post_info;
         $data=$request->all();
         $data['user_id']=$request->user()->id;
         // $data['post_id']=$post_info->id;
@@ -55,14 +55,14 @@ class PostCommentController extends Controller
             'actionURL'=>route('blog.detail',$post_info->slug),
             'fas'=>'fas fa-comment'
         ];
-        Notification::send($user, new StatusNotification($details));
+        // Notification::send($user, new StatusNotification($details));
         if($status){
             request()->session()->flash('success','Thank you for your comment');
         }
         else{
             request()->session()->flash('error','Something went wrong! Please try again!!');
         }
-        return redirect()->back();
+        return redirect()->back(); 
     }
 
     /**

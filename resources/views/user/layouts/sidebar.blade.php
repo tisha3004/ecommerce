@@ -46,6 +46,13 @@
             <span>Banners</span>
         </a>
     </li>
+      <!--Banners -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('user.blog.index')}}">
+            <i class="fas fa-hammer fa-chart-area"></i>
+            <span>Blogs</span>
+        </a>
+    </li>
     <!-- Reviews -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('user.productreview.index')}}">

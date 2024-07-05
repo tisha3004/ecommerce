@@ -36,7 +36,7 @@
                                     <div class="blog-meta">
                                         <span class="author"><a href="javascript:void(0);"><i class="fa fa-user"></i>By {{$post->author_info['name']}}</a><a href="javascript:void(0);"><i class="fa fa-calendar"></i>{{$post->created_at->format('M d, Y')}}</a><a href="javascript:void(0);"><i class="fa fa-comments"></i>Comment ({{$post->allComments->count()}})</a></span>
                                     </div>
-                                    <div class="sharethis-inline-reaction-buttons"></div>
+                                  
                                     <div class="content">
                                         @if($post->quote)
                                         <blockquote> <i class="fa fa-quote-left"></i> {!! ($post->quote) !!}</blockquote>
@@ -62,8 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @auth
-                            <div class="col-12 mt-4">
+<div class="col-12 mt-4">
                                 <div class="reply">
                                     <div class="reply-head comment-form" id="commentFormContainer">
                                         <h2 class="reply-title">Leave a Comment</h2>
@@ -102,24 +101,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            @else
-                            <p class="text-center p-5">
-                                You need to <a href="{{route('login.form')}}" style="color:rgb(54, 54, 204)">Login</a> OR <a style="color:blue" href="{{route('register.form')}}">Register</a> for comment.
-
-                            </p>
-
-
-                            <!--/ End Form -->
-                            @endauth
-                            <div class="col-12">
-                                <div class="comments">
-                                    <h3 class="comment-title">Comments ({{$post->allComments->count()}})</h3>
-                                    <!-- Single Comment -->
-                                    @include('frontend.pages.comment', ['comments' => $post->comments, 'post_id' => $post->id, 'depth' => 3])
-                                    <!-- End Single Comment -->
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

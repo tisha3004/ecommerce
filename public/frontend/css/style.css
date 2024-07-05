@@ -4908,6 +4908,10 @@ Version:1.0
 	color:#fff;
 	text-decoration:underline;
 }
+.custom-size img{
+		width: 10px; 
+		height: 50px; 
+}
 /*=============================
 	End Footer CSS
 ===============================*/

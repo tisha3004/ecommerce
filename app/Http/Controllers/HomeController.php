@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Post;
 use App\Models\Banner;
 use App\Models\ProductReview;
 use App\Models\PostComment;
@@ -47,6 +48,7 @@ class HomeController extends Controller
         return view('user.index', compact('totalOrders', 'totalRevenue', 'monthlySales','totalUsers'));
     }
 
+
     public function profile(){
         $profile=Auth()->user();
         // return $profile;
@@ -86,6 +88,30 @@ class HomeController extends Controller
         $banner=Banner::orderBy('id','DESC')->paginate(10);
         //return $banner;
        return view('user.banner.index')->with('Banners',$banner);
+    }
+
+
+    public function addBlog(){
+        return view('user.blog.add');   
+    } 
+    public function storeBlog(){
+        return view('user.banner.add');   
+    } 
+
+
+    public function addBanner(){
+        return view('user.banner.add');   
+    } 
+    
+
+    public function blogIndex(){
+        $blog=Post::orderBy('id','DESC')->paginate(10);
+      //  return $blog;
+       return view('user.blog.index')->with('Blogs',$blog);
+    }
+
+    public function storeBanner(Request $request){
+        return $request;
     }
     public function userOrderDelete($id)
     {

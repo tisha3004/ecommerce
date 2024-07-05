@@ -349,7 +349,7 @@
 													</div>
 												</form>
 												<div class="default-social">
-												<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+												<!-- ShareThis BEGIN --><!-- ShareThis END -->
 												</div>
 											</div>
 										</div>

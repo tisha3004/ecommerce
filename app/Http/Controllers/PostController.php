@@ -44,45 +44,49 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-        $this->validate($request,[
-            'title'=>'string|required',
-            'quote'=>'string|nullable',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|nullable',
-            'tags'=>'nullable',
-            'added_by'=>'nullable',
-            'post_cat_id'=>'required',
-            'status'=>'required|in:active,inactive'
-        ]);
+       
+    $this->validate($request, [
+        'title' => 'string|required',
+        'quote' => 'string|nullable',
+        'summary' => 'string|required',
+        'description' => 'string|nullable',
+        'photo' => 'string|nullable',
+        'tags' => 'nullable|array', // Ensure tags is an array
+        'added_by' => 'nullable',
+        'post_cat_id' => 'required',
+        'status' => 'required|in:active,inactive'
+    ]);
+    dd($request->validated());
+    // Get all validated data
+    $data = $request->all();
 
-        $data=$request->all();
+    // Generate slug
+    $slug = Str::slug($request->title);
+    $count = Post::where('slug', $slug)->count();
+    if ($count > 0) {
+        $slug = $slug . '-' . date('ymdis') . '-' . rand(0, 999);
+    }
+    $data['slug'] = $slug;
 
-        $slug=Str::slug($request->title);
-        $count=Post::where('slug',$slug)->count();
-        if($count>0){
-            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
-        }
-        $data['slug']=$slug;
+    // Handle tags
+    if ($request->has('tags')) {
+        $tags = $request->input('tags');
+        $data['tags'] = implode(',', $tags); // Convert array to comma-separated string
+    } else {
+        $data['tags'] = ''; // Set default if tags are not provided
+    }
 
-        $tags=$request->input('tags');
-        if($tags){
-            $data['tags']=implode(',',$tags);
-        }
-        else{
-            $data['tags']='';
-        }
-        // return $data;
+    // Create post
+    $post = Post::create($data);
 
-        $status=Post::create($data);
-        if($status){
-            request()->session()->flash('success','Post added');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
-        return redirect()->route('post.index');
+    if ($post) {
+        request()->session()->flash('success', 'Post added');
+    } else {
+        request()->session()->flash('error', 'Please try again!!');
+    }
+
+    return redirect()->route('post.index');
+
     }
 
     /**

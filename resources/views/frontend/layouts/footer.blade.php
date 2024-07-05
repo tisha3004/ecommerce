@@ -60,8 +60,15 @@
 								</ul>
 							</div>
 							<!-- End Single Widget -->
-							<div class="sharethis-inline-follow-buttons"></div>
-						</div>
+							<br>
+							<a href="http://www.facebook.com/">
+								<img src="{{ asset('/storage/photos/1/icons/facebook.png') }}" class="custom-size" alt="Facebook"></a>
+							<a href="http://www.instagram.com/tisha_mehta_30/">
+							<img src="/storage/photos/1/icons/instagram.png" class="custom-size" alt="Instagram">
+							</a>
+							<a href="https://github.com/tisha3004">
+							<img src="/storage/photos/1/icons/github.png" class="custome-size" alt="GitHub"></a>
+
 						<!-- End Single Widget -->
 					</div>
 				</div>
@@ -88,7 +95,8 @@
 		</div>
 	</footer>
 	<!-- /End Footer Area -->
- 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 	<!-- Jquery -->
     <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
     <script src="{{asset('frontend/js/jquery-migrate-3.0.0.js')}}"></script>

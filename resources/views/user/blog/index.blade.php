@@ -9,11 +9,11 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Banners Lists</h6>
+      <h6 class="m-0 font-weight-bold text-primary float-left">Blogs Lists</h6>
     </div>
     <div class="container">
-        <h2>List of Banners</h2>
-        <a href="{{route('user.banner.add')}}"> Add More Banners</a>
+        <h2>List of Blogs</h2>
+        <a href="{{route('user.blog.add')}}"> Add More Blogs</a>
 
         <table class="table">
             <thead>
@@ -28,21 +28,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($Banners as $banner)
+                @foreach ($Blogs as $blog)
                     <tr>
-                        <td>{{ $banner->id }}</td>
-                        <td>{{ $banner->title }}</td>
-                        <td>{{ $banner->slug }}</td>
-                        <td>{{ $banner->photo }}</td>
-                        <td>{{ $banner->description }}</td>
-                        <td>{{ $banner->status }}</td>
+                        <td>{{ $blog->id }}</td>
+                        <td>{{ $blog->title }}</td>
+                        <td>{{ $blog->slug }}</td>
+                        <td>{{ $blog->photo }}</td>
+                        <td>{{ $blog->description }}</td>
+                        <td>{{ $blog->status }}</td>
 
                         <td>
                         <a href="" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
                         <form method="POST" action="">
                           @csrf
                           @method('delete')
-                          <button class="btn btn-danger btn-sm dltBtn" data-id="{{$banner->id}}" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-danger btn-sm dltBtn" data-id="{{$blog->id}}" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                     </tr>
