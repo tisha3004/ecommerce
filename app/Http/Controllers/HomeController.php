@@ -234,8 +234,9 @@ class HomeController extends Controller
 
     public function userComment()
     {
-        $comments=PostComment::getAllUserComments();
-        return view('user.comment.index')->with('comments',$comments);
+        $comments=PostComment::orderBy('id')->paginate(10);
+        //return $comments;
+       return view('user.comment.index')->with('comments',$comments);
     }
     public function userCommentDelete($id){
         $comment=PostComment::find($id);

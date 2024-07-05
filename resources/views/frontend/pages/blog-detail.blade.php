@@ -33,9 +33,7 @@
                                 </div>
                                 <div class="blog-detail">
                                     <h2 class="blog-title">{{$post->title}}</h2>
-                                    <div class="blog-meta">
-                                        <span class="author"><a href="javascript:void(0);"><i class="fa fa-user"></i>By {{$post->author_info['name']}}</a><a href="javascript:void(0);"><i class="fa fa-calendar"></i>{{$post->created_at->format('M d, Y')}}</a><a href="javascript:void(0);"><i class="fa fa-comments"></i>Comment ({{$post->allComments->count()}})</a></span>
-                                    </div>
+                                    
                                   
                                     <div class="content">
                                         @if($post->quote)
@@ -62,7 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-<div class="col-12 mt-4">
+                            <div class="col-12 mt-4">
                                 <div class="reply">
                                     <div class="reply-head comment-form" id="commentFormContainer">
                                         <h2 class="reply-title">Leave a Comment</h2>

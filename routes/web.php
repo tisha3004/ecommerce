@@ -173,6 +173,7 @@ Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]]
     Route::get('/add-blog', [HomeController::class, 'addBlog'])->name('user.blog.add');
     Route::post('/add-blog', [PostController::class, 'store'])->name('user.blog.store');
     Route::get('/add-banner', [HomeController::class, 'addBanner'])->name('user.banner.add');
+    Route::post('/add-banner', [BannerController::class, 'store'])->name('user.banner.store');
     Route::get('/products', [HomeController::class, 'productIndex'])->name('user.product.index');
     Route::get('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index');
 
@@ -184,7 +185,7 @@ Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]]
     Route::delete('/user-review/delete/{id}', [HomeController::class, 'productReviewDelete'])->name('user.productreview.delete');
     Route::get('/user-review/edit/{id}', [HomeController::class, 'productReviewEdit'])->name('user.productreview.edit');
     Route::patch('/user-review/update/{id}', [HomeController::class, 'productReviewUpdate'])->name('user.productreview.update');
-    Route::get('user-post/comment', [HomeController::class, 'userComment'])->name('user.post-comment.index');
+    Route::get('user-post/comment', [HomeController::class, 'userComment'])->name('comment.index');
     Route::delete('user-post/comment/delete/{id}', [HomeController::class, 'userCommentDelete'])->name('user.post-comment.delete');
     Route::get('user-post/comment/edit/{id}', [HomeController::class, 'userCommentEdit'])->name('user.post-comment.edit');
     Route::patch('user-post/comment/update/{id}', [HomeController::class, 'userCommentUpdate'])->name('user.post-comment.update');

@@ -4,7 +4,7 @@
  <!-- DataTales Example -->
  
  <div class="container mt-5">
-    <h2 class="mb-4">Create a New Post</h2>
+    <h2 class="mb-4">Create a New Blog</h2>
     <form method="post" action="{{route('user.blog.store')}}" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
@@ -12,6 +12,7 @@
         <label for="title">Title</label>
         <input type="text" class="form-control" name="title" placeholder="Enter title">
       </div>
+      
       <div class="form-group">
         <label for="slug">Slug</label>
         <input type="text" class="form-control" name="slug" placeholder="Enter slug">
@@ -40,20 +41,20 @@
         <label for="post_category_name">Post Category ID</label>
         <select class="form-control" name="post_category_id">
           <option value="" selected disabled>Select category</option>
-          <option value="Travel">Travel</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Clothes">Clothes</option>
-          <option value="Enjoy">Enjoy</option>
-          <option value="Post Category">Post Category</option>
+          <option value="1">Travel</option>
+          <option value="2">Electronics</option>
+          <option value="3">Clothes</option>
+          <option value="4">Enjoy</option>
+          <option value="5">Post Category</option>
         </select>
       </div>
       <div class="form-group">
         <label for="post_tag_id">Post Tag ID</label>
         <select class="form-control" name="post_tag_id">
           <option value="" selected disabled>Select tag</option>
-          <option value="Enjoy">Enjoy</option>
-          <option value="2020">2020</option>
-          <option value="Tag">Tag </option>
+          <option value="1">Enjoy</option>
+          <option value="2">2020</option>
+          <option value="4">Tag </option>
 
         </select>
       </div>

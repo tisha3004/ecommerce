@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Banner;
 
 class BannerController extends Controller
 {
@@ -35,29 +36,34 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-        $this->validate($request,[
-            'title'=>'string|required|max:50',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'status'=>'required|in:active,inactive',
-        ]);
-        $data=$request->all();
-        $slug=Str::slug($request->title);
-        $count=Banner::where('slug',$slug)->count();
-        if($count>0){
-            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
-        }
-        $data['slug']=$slug;
-        // return $slug;
-        $status=Banner::create($data);
-        if($status){
-            request()->session()->flash('success','Banner has been added successfully');
-        }
-        else{
-            request()->session()->flash('error','Error occurred while adding banner');
-        }
-        return redirect()->route('banner.index');
+       
+           // return $request->all();
+           /*  $request->validate([
+                'title' => 'required|max:255',
+                'slug' => 'required|unique:banners,slug',
+                'description' => 'required',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // adjust file size and types as needed
+                'status' => 'required', // adjust statuses as needed
+            ]); */
+            /* return "data validated"; */
+            // Handle photo upload if provided
+            $photoPath = null;
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->store('photos', 'storage'); // adjust storage path as needed
+            }
+    
+            // Create the banner
+            $banner = new Banner();
+            $banner->title = $request->title;
+            $banner->slug = $request->slug;
+            $banner->description = $request->description;
+            $banner->photo = $photoPath;
+            $banner->status = $request->status;
+            $banner->save();
+    
+            return redirect()->route('user.banner.index')->with('success', 'Banner created successfully.');
+     
+        
     }
 
     /**
