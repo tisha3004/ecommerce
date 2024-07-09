@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function index()
     {
         $users=User::orderBy('id','ASC')->paginate(10);
-        return view('backend.users.index')->with('users',$users);
+        return view('user.users.index')->with('users',$users);
     }
 
     /**
@@ -83,7 +83,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user=User::findOrFail($id);
-        return view('backend.users.edit')->with('user',$user);
+        return view('user.users.edit')->with('user',$user);
     }
 
     /**
@@ -115,7 +115,7 @@ class UsersController extends Controller
         else{
             request()->session()->flash('error','Error occured while updating');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('user.noOfUser.index');
 
     }
 

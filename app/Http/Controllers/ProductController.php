@@ -43,51 +43,53 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-        $this->validate($request,[
-            'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
-            'cat_id'=>'required|exists:categories,id',
-            'brand_id'=>'nullable|exists:brands,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
-        ]);
+        //return $request;
+        try {
+            $validatedData = $this->validate($request, [
+                'title' => 'string|required',
+                'summary' => 'string|required',
+                'description' => 'string|nullable',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'size' => 'nullable',
+                'stock' => 'required|numeric',
+                'cat_id' => 'required|exists:categories,id',
+                'brand_id' => 'nullable|exists:brands,id',
+                'child_cat_id' => 'nullable|exists:categories,id',
+                'is_featured' => 'sometimes|in:1',
+                'status' => 'required|in:active,inactive',
+                'condition' => 'required|in:default,new,hot',
+                'price' => 'required|numeric',
+                'discount' => 'nullable|numeric'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e->errors());
+        }
 
-        $data=$request->all();
-        $slug=Str::slug($request->title);
-        $count=Product::where('slug',$slug)->count();
-        if($count>0){
-            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        // return $request; 
+        $data = $request->all();
+        $slug = Str::slug($request->title);
+        $count = Product::where('slug', $slug)->count();
+        if ($count > 0) {
+            $slug = $slug . '-' . date('ymdis') . '-' . rand(0, 999);
         }
-        $data['slug']=$slug;
-        $data['is_featured']=$request->input('is_featured',0);
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
+        $data['slug'] = $slug;
+        $data['is_featured'] = $request->input('is_featured', 0);
+        $size = $request->input('size');
+        if ($size) {
+            $data['size'] = implode(',', $size);
+        } else {
+            $data['size'] = '';
         }
-        else{
-            $data['size']='';
+        $status = Product::create($data);
+        if ($status) {
+            request()->session()->flash('success', 'Product added');
+        } else {
+            request()->session()->flash('error', 'Please try again!!');
         }
-        // return $size;
-        // return $data;
-        $status=Product::create($data);
-        if($status){
-            request()->session()->flash('success','Product added');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
-        return redirect()->route('product.index');
-
+    
+        return redirect()->route('user.product.index');
     }
+    
 
     /**
      * Display the specified resource.
@@ -106,7 +108,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+  /*   public function edit($id)
     {
         $brand=Brand::get();
         $product=Product::findOrFail($id);
@@ -117,7 +119,7 @@ class ProductController extends Controller
                     ->with('brands',$brand)
                     ->with('categories',$category)->with('items',$items);
     }
-
+ */
     /**
      * Update the specified resource in storage.
      *
@@ -125,35 +127,58 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     public function addProduct(){
+            $brand=Brand::get();
+            $cat=Category::get();
+          //  return $cat;
+           return view('user.product.add')->with('brand',$brand)->with('cat',$cat);
+     }
+
+     public function editProduct($id){
+        $brand=Brand::get();
+        $product=Product::findOrFail($id);
+        $category=Category::where('is_parent',1)->get();
+        $items=Product::where('id',$id)->get();
+        // return $items;
+        return view('user.product.edit')->with('product',$product)
+                    ->with('brands',$brand)
+                    ->with('categories',$category)->with('items',$items);
+    }
+
     public function update(Request $request, $id)
     {
         $product=Product::findOrFail($id);
-        $this->validate($request,[
-            'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
-            'cat_id'=>'required|exists:categories,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            'brand_id'=>'nullable|exists:brands,id',
-            'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
-        ]);
+        try {
+            $validatedData = $this->validate($request, [
+                'title' => 'string|required',
+                'summary' => 'string|required',
+                'description' => 'string|nullable',
+                'photo' => 'nullable|string',
+                'size' => 'nullable',
+                'stock' => 'required|numeric',
+                'cat_id' => 'required|exists:categories,id',
+                'brand_id' => 'nullable|exists:brands,id',
+                'child_cat_id' => 'nullable|exists:categories,id',
+                'is_featured' => 'sometimes|in:1',
+                'status' => 'required|in:active,inactive',
+                'condition' => 'required|in:default,new,hot',
+                'price' => 'required|numeric',
+                'discount' => 'nullable|numeric'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e->errors());
+        }
 
         $data=$request->all();
         $data['is_featured']=$request->input('is_featured',0);
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
+        $size = $request->input('size');
+        if (is_array($size)) { 
+            $data['size'] = implode(',', $size);
+        } else {
+            $data['size'] = ''; 
         }
-        else{
-            $data['size']='';
-        }
+    
         // return $data;
         $status=$product->fill($data)->save();
         if($status){
@@ -162,7 +187,7 @@ class ProductController extends Controller
         else{
             request()->session()->flash('error','Please try again!!');
         }
-        return redirect()->route('product.index');
+        return redirect()->route('user.product.index');
     }
 
     /**
@@ -182,6 +207,6 @@ class ProductController extends Controller
         else{
             request()->session()->flash('error','Error while deleting product');
         }
-        return redirect()->route('product.index');
+        return redirect()->route('user.product.index');
     }
 }

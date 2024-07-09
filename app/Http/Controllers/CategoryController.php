@@ -16,8 +16,8 @@ class CategoryController extends Controller
     public function index()
     {
         $category=Category::getAllCategory();
-        // return $category;
-        return view('backend.category.index')->with('categories',$category);
+       // return $category;
+        return view('user.category.index')->with('categories',$category);
     }
 
     /**
@@ -28,7 +28,7 @@ class CategoryController extends Controller
     public function create()
     {
         $parent_cats=Category::where('is_parent',1)->orderBy('title','ASC')->get();
-        return view('backend.category.create')->with('parent_cats',$parent_cats);
+        return view('user.category.create')->with('parent_cats',$parent_cats);
     }
 
     /**

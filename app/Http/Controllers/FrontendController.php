@@ -407,6 +407,38 @@ class FrontendController extends Controller
     public function showResetForm(){
         return view('auth.passwords.old-reset');
     }
+
+    public function editUser(Request $request){
+        $userId = Auth::id();
+
+        // Retrieve the user from the database
+        $user = User::find($userId);
+        if (!$user) {
+            // Handle case where user is not found
+            return redirect()->back()->with('error', 'User not found.');
+        }   
+        //return $user;
+       return view('frontend.pages.edit-user')->with('user',$user);
+
+    }
+    public function editUserSubmit(Request $request,$id){
+         //return $request->all();
+        $this->validate($request,[
+            'name'=>'string|required|min:2',
+            'email'=>'string|required|unique:users,email',
+        ]);
+        $data=$request->all();
+        // dd($data);
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->photo=$request->photo;
+        $user->save();
+
+        // Redirect back or to a specific route
+        return redirect()->route('home1')->with('success', 'User updated successfully'); 
+    }       
+       
 /* 
     public function subscribe(Request $request){
         if(! Newsletter::isSubscribed($request->email)){

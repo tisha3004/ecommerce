@@ -86,7 +86,8 @@ class BannerController extends Controller
     public function edit($id)
     {
         $banner=Banner::findOrFail($id);
-        return view('backend.banner.edit')->with('banner',$banner);
+        //return $bannner;
+        return view('user.banner.edit')->with('banner',$banner);
     }
 
     /**
@@ -120,7 +121,7 @@ class BannerController extends Controller
         else{
             request()->session()->flash('error','Error occurred while updating banner');
         }
-        return redirect()->route('banner.index');
+        return redirect()->route('user.banner.index');
     }
 
     /**

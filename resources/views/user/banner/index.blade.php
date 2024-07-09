@@ -13,7 +13,7 @@
     </div>
     <div class="container">
         <h2>List of Banners</h2>
-        <a href="{{route('user.banner.add')}}"> Add More Banners</a>
+        <a href="{{route('user.banner.add')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add More Banners</a>
 
         <table class="table">
             <thead>
@@ -38,7 +38,7 @@
                         <td>{{ $banner->status }}</td>
 
                         <td>
-                        <a href="" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                        <a href="{{route('user.banner.edit',[$banner->id])}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-edit"></i></a>
                         <form method="POST" action="">
                           @csrf
                           @method('delete')

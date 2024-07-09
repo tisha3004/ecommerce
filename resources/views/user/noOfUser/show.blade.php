@@ -10,7 +10,7 @@
     <table class="table table-striped table-hover table-hover">
       <thead>
         <tr>
-            <th>#</th>
+          
             <th>User ID.</th>
             <th>Name</th>
             <th>Email</th>
@@ -22,17 +22,17 @@
       </thead>
       <tbody>
         <tr>
-            <td>{{$User->id}}</td>
-            <td>{{$User->name}} </td>
-            <td>{{$User->email}}</td>
-            <td>{{$User->photo}}</td>
-            <td>{{$User->role}}</td>
-            <td>{{$User->status}}</td>
+            <td>{{$user->id}}</td>
+            <td>{{$user->name}} </td>
+            <td>{{$user->email}}</td>
+            <td>{{$user->photo}}</td>
+            <td>{{$user->role}}</td>
+            <td>{{$user->status}}</td>
             <td>
-                <form method="POST" action="{{route('user.delete',[$User->id])}}">
+                <form method="POST" action="{{route('user.delete',[$user->id])}}">
                   @csrf
                   @method('delete')
-                      <button class="btn btn-danger btn-sm dltBtn" data-id="{{$User->id}}" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                      <button class="btn btn-danger btn-sm dltBtn" data-id="{{$user->id}}" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                 </form>
             </td>
 
@@ -49,11 +49,11 @@
               <table class="table">
                     <tr class="">
                         <td> User ID</td>
-                        <td> : {{$User->id}}</td>
+                        <td> : {{$user->id}}</td>
                     </tr>
                     <tr>
                         <td>User Name</td>
-                        <td> : {{User->name}} </td>
+                        <td> : {{$user->name}} </td>
                     </tr>
                     <tr>
                     </tr>

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class user extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
     
     protected $fillable = [
         'name', 'email', 'password','role','photo','status','provider','provider_id',

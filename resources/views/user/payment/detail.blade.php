@@ -12,36 +12,40 @@
       <h6 class="m-0 font-weight-bold text-primary float-left">Payment Lists</h6>
     </div>
     <div class="container">
-        <h2>List of Payment</h2>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>User ID</th>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($payment as $pay)
-                    <tr>
-                        <td>{{ $pay->id }}</td>
-                        <td>{{ $pay->user_id }}</td>
-                        <td>{{ $pay->first_name }}  {{$pay->last_name}}</td>
-                        <td>{{ $pay->total_amount }}</td>
-                        <td>{{ $pay->payment_status }}</td>
-                        <td>
-                        <a href="{{route('payment.detail',[$pay->id])}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+        <h2>Details of Payment</h2>
+    <form action="{{route('user.payment.index1')}}" method="post">
+        @csrf
+    <div class="form-group">
+        <label for="PaymentID">ID: </label>
+        <input type="text" name="id" class="form-control" value="{{$payment->id}}" readonly>
     </div>
+    <div class="form-group">
+        <label for="User">User ID: </label>
+        <input type="text" name="uid" class="form-control" value="{{$payment->id}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="Name">Name: </label>
+        <input type="text" name="name" class="form-control" value="{{ $payment->first_name }}  {{$payment->last_name}}" readonly>
+    </div>         
+    <div class="form-group">
+        <label for="amount">Amount: </label>
+        <input type="text" name="amount" class="form-control" value="{{$payment->total_amount}}"readonly>
+    </div>
+    <div class="form-group">
+        <label for="status">Status: </label>
+        <input type="text" name="status" class="form-control" value="{{$payment->status}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="order_number">Order Number: </label>
+        <input type="text" name="order_number" class="form-control" value="{{$payment->order_number}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone Number: </label>
+        <input type="text" name="phone" class="form-control" value="{{$payment->phone}}" readonly>
+    </div>
+    <button type="submit" class="btn btn-primary">Back</button>
+    </div>
+</form>
 </div>
 @endsection
 

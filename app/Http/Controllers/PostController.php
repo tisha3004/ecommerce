@@ -105,7 +105,7 @@ class PostController extends Controller
         $categories=PostCategory::get();
         $tags=PostTag::get();
         $users=User::get();
-        return view('backend.post.edit')->with('categories',$categories)->with('users',$users)->with('tags',$tags)->with('post',$post);
+        return view('user.blog.edit')->with('categories',$categories)->with('users',$users)->with('tags',$tags)->with('post',$post);
     }
 
     /**

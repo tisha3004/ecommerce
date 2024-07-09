@@ -11,7 +11,7 @@ class Category extends Model
 
 
     public function parent_info(){
-        return this->hasOne('App\Models\Category','id','parent_id');
+        return $this->hasOne('App\Models\Category','id','parent_id');
     }
     public static function getAllCategory(){
         return  Category::orderBy('id','DESC')->with('parent_info')->paginate(10);

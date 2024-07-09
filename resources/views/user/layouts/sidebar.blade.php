@@ -28,28 +28,28 @@
     <!--Orders -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('user.order.index')}}">
-            <i class="fas fa-hammer fa-chart-area"></i>
+            <i class="fas fa-box"></i>
             <span>Orders</span>
         </a>
     </li>
      <!--Users -->
      <li class="nav-item">
         <a class="nav-link" href="{{route('user.noOfUser.index')}}">
-            <i class="fas fa-hammer fa-chart-area"></i>
+            <i class="fas fa-users fa-chart-area"></i>
             <span>Users</span>
         </a>
     </li>
       <!--Banners -->
       <li class="nav-item">
         <a class="nav-link" href="{{route('user.banner.index')}}">
-            <i class="fas fa-hammer fa-chart-area"></i>
+            <i class="fas fa-image"></i>
             <span>Banners</span>
         </a>
     </li>
       <!--Banners -->
       <li class="nav-item">
         <a class="nav-link" href="{{route('user.blog.index')}}">
-            <i class="fas fa-hammer fa-chart-area"></i>
+            <i class="fas fa-blog"></i>
             <span>Blogs</span>
         </a>
     </li>
@@ -59,17 +59,22 @@
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>
     </li>
-
+     <!-- Categories -->
+     <li class="nav-item">
+        <a class="nav-link" href="{{route('user.category.index')}}">
+            <i class="fas fa-credit-card"></i>
+            <span>Categories</span></a>
+    </li>
     <!-- Product -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('user.product.index')}}">
-            <i class="fas fa-comments"></i>
+            <i class="fas fa-box-open"></i>
             <span>Products</span></a>
     </li>
       <!-- Payment -->
       <li class="nav-item">
         <a class="nav-link" href="{{route('user.payment.index')}}">
-            <i class="fas fa-comments"></i>
+            <i class="fas fa-credit-card"></i>
             <span>Payment</span></a>
     </li>
 
@@ -83,7 +88,7 @@
     </div>
     <!-- Comments -->
     <li class="nav-item">
-      <a class="nav-link" href="{{route('user.post-comment.index')}}">
+      <a class="nav-link" href="{{route('comment.index')}}">
           <i class="fas fa-comments fa-chart-area"></i>
           <span>Comments</span>
       </a>

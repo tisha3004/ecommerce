@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Lfm;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
@@ -20,10 +22,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostTagController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\CheckUserSession;
+
 
 
 /*
@@ -47,8 +51,10 @@ Route::get('user/register', [FrontendController::class, 'register'])->name('regi
 Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
 
 // Reset password route
-Route::get('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset');
-Route::post('password-reset', [FrontendController::class, 'ResetPassword'])->name('password.reset');
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Socialite
 Route::get('login/{provider}/', [LoginController::class, 'redirect'])->name('login.redirect');
@@ -98,6 +104,12 @@ Route::match(['get', 'post'], '/filter', [FrontendController::class, 'productFil
 Route::get('/product/track', [OrderController::class, 'orderTrack'])->name('order.track');
 Route::post('product/track/order', [OrderController::class, 'productTrackOrder'])->name('product.track.order');
 
+
+//edit profile
+Route::get('/user/edit', [FrontendController::class, 'editUser'])->name('user.edit');
+Route::post('/user/edit/{id}', [FrontendController::class, 'editUserSubmit'])->name('userEdit.submit');
+
+
 // Blog
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');
 Route::get('/blog-detail/{slug}', [FrontendController::class, 'blogDetail'])->name('blog.detail');
@@ -131,54 +143,41 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 // Backend section start
-Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin');
-    Route::get('/file-manager', function () {
-        return view('backend.layouts.file-manager');
-    })->name('file-manager');
-    Route::resource('users', UsersController::class);
-    Route::resource('banner', BannerController::class);
-    Route::resource('brand', BrandController::class);
-    Route::get('/profile', [AdminController::class, 'profile'])->name('admin-profile');
-    Route::post('/profile/{id}', [AdminController::class, 'profileUpdate'])->name('profile-update');
-    Route::resource('/category', CategoryController::class);
-    Route::resource('/product', ProductController::class);
-    Route::post('/category/{id}/child', [CategoryController::class, 'getChildByParent']);
-    Route::resource('/post-category', PostCategoryController::class);
-    Route::resource('/post-tag', PostTagController::class);
-    Route::resource('/post', PostController::class);
-    Route::resource('/message', MessageController::class);
-    Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
-    Route::resource('/order', OrderController::class);
-    Route::resource('/shipping', ShippingController::class);
-    Route::resource('/coupon', CouponController::class);
-    Route::get('settings', [AdminController::class, 'settings'])->name('settings');
-    Route::post('setting/update', [AdminController::class, 'settingsUpdate'])->name('settings.update');
-    Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
-    Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
-    Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
-    Route::get('change-password', [AdminController::class, 'changePassword'])->name('change.password.form');
-    Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password');
-});
-
-// User section start
 Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]], */ function () {
      Route::get('/', [HomeController::class, 'index'])->name('user');
     Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
     Route::post('/profile/{id}', [HomeController::class, 'profileUpdate'])->name('user-profile-update');
     Route::get('/order', [HomeController::class, 'orderIndex'])->name('user.order.index');
-    Route::get('/user', [HomeController::class, 'orderUser'])->name('user.noOfUser.index');
+    Route::get('/user', [UsersController::class, 'index'])->name('user.noOfUser.index');
     Route::get('/banner', [HomeController::class, 'bannerIndex'])->name('user.banner.index');
     Route::get('/blog', [HomeController::class, 'blogIndex'])->name('user.blog.index');
+    Route::get('/edit-blog/{id}', [PostController::class, 'edit'])->name('blog.edit');
+    Route::post('/update-blog', [PostController::class, 'store'])->name('user.blog.edit');
     Route::get('/add-blog', [HomeController::class, 'addBlog'])->name('user.blog.add');
     Route::post('/add-blog', [PostController::class, 'store'])->name('user.blog.store');
     Route::get('/add-banner', [HomeController::class, 'addBanner'])->name('user.banner.add');
     Route::post('/add-banner', [BannerController::class, 'store'])->name('user.banner.store');
+    Route::get('/edit-banner/{id}', [BannerController::class, 'edit'])->name('user.banner.edit');
+    Route::post('/edit-banner/{id}', [BannerController::class, 'store'])->name('user.banner.update');
     Route::get('/products', [HomeController::class, 'productIndex'])->name('user.product.index');
     Route::get('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index');
+    Route::get('/payment-detail/{id}',[HomeController::class,'paymentDetail'])->name('payment.detail');
+    Route::post('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index1');
 
+
+    Route::get('/category', [CategoryController::class, 'index'])->name('user.category.index');
+    Route::get('/edit-category/{id}', [PostController::class, 'edit'])->name('category.edit');
+    Route::post('/update-category', [PostController::class, 'store'])->name('user.category.edit');
+    Route::get('/add-category', [HomeController::class, 'addcategory'])->name('user.category.add');
+    Route::post('/add-category', [PostController::class, 'store'])->name('user.category.store');
+    Route::get('/add-product', [ProductController::class, 'addProduct'])->name('user.product.add');
+    Route::get('/edit-product/{id}', [ProductController::class, 'editProduct'])->name('user.product.edit1');
+    Route::post('/edit-product/{id}', [ProductController::class, 'update'])->name('user.product.edit');
+    Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('user.product.delete');
+    Route::post('/add-product', [ProductController::class, 'store'])->name('user.product.store');
     Route::get('/order/show/{id}', [HomeController::class, 'orderShow'])->name('user.order.show');
-    Route::get('/user/show/{id}', [HomeController::class, 'userShow'])->name('user.show');
+    Route::get('/user/show/{id}', [UsersController::class, 'edit'])->name('user.show');
+    Route::post('/user/show/{id}', [UsersController::class, 'update'])->name('users.update');
     Route::delete('/delete/{id}', [HomeController::class, 'userDelete'])->name('user.delete');
     Route::delete('/order/delete/{id}', [HomeController::class, 'userOrderDelete'])->name('user.order.delete');
     Route::get('/user-review', [HomeController::class, 'productReviewIndex'])->name('user.productreview.index');

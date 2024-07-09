@@ -34,7 +34,7 @@
             @foreach($reviews as $review)
                 <tr>
                     <td>{{$counter}}</td>
-                    <td>{{$review->user_info['name']}}</td>
+                    <td>{{$review->user_id}}</td>
                     <td>{{$review->product->title}}</td>
                     <td>{{$review->review}}</td>
                     <td>

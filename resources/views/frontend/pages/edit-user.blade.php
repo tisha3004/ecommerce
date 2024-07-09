@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','Ecommerce  || Login Page')
+@section('title','Ecommerce  || User Edit')
 
 @section('main-content')
     <!-- Breadcrumbs -->
@@ -11,7 +11,7 @@
                     <div class="bread-inner">
                         <ul class="bread-list">
                             <li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
-                            <li class="active"><a href="javascript:void(0);">Login</a></li>
+                            <li><a href="{{route('user.edit')}}">Edit Profile</a></li>
                         </ul>
                     </div>
                 </div>
@@ -26,33 +26,39 @@
             <div class="row"> 
                 <div class="col-lg-6 offset-lg-3 col-12">
                     <div class="login-form">
-                        <h2>Login</h2>
+                    @if($user)
+             
+                    
+               
                         <!-- Form -->
-                        <form class="form" method="post" action="{{route('login.submit')}}">
+                        <form class="form" method="post" action="{{route('userEdit.submit', ['id' => $user->id])}}">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Email<span>*</span></label>
-                                        <input type="email" name="email" placeholder="" required="required" value="{{old('email')}}">
-                                        @error('email')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
+                                        <label>Name: </label>
+                                        <input type="name" name="name" placeholder="" required="required" value="{{$user->name}}">
+                                        <input type="hidden" name="id"  value="{{$user->id}}">
+                                     
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Password<span>*</span></label>
-                                        <input type="password" name="password" placeholder="" required="required" value="{{old('password')}}">
-                                        @error('password')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
+                                        <label>Your Email</label>
+                                        <input type="email" name="email" placeholder="" required="required" value="{{$user->email}}">
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Photo</label>
+                                        <input type="file" class="form-control-file" name="photo" value="{{$user->photo}}">
+                                      
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group login-btn">
-                                        <button class="btn btn-facebook" type="submit">Login</button>
-                                        <a href="{{route('register.form')}}" class="btn">Register</a>
+                                        <button class="btn btn-facebook" type="submit">Save</button>
                                         <!-- OR
                                         <a href="{{route('login.redirect','facebook')}}" class="btn btn-facebook"><i class="ti-facebook"></i></a>
                                         <a href="{{route('login.redirect','github')}}" class="btn btn-github"><i class="ti-github"></i></a>
@@ -75,7 +81,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> 
+        
+      @endif
+
     <!--/ End Login -->
 @endsection
 @push('styles')

@@ -11,12 +11,12 @@
       @method('PATCH')
       <div class="form-group">
         <label for="name">By:</label>
-        <input type="text" disabled class="form-control" value="{{$comment->user_info->name}}">
-      </div>
+        <input type="text" disabled class="form-control" value="{{$comment->user_id}}">
+      </div>  
       <div class="form-group">
         <label for="comment">comment</label>
       <textarea name="comment" id="" cols="20" rows="10" class="form-control">{{$comment->comment}}</textarea>
-      </div>
+      </div> 
       <div class="form-group">
         <label for="status">Status :</label>
         <select name="status" id="" class="form-control">

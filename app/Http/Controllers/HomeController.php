@@ -48,7 +48,11 @@ class HomeController extends Controller
         return view('user.index', compact('totalOrders', 'totalRevenue', 'monthlySales','totalUsers'));
     }
 
-
+    public function paymentDetail($id){
+        $payment=Order::findOrFail($id);
+        //return $payment;
+        return view('user.payment.detail')->with('payment',$payment);
+    }
     public function profile(){
         $profile=Auth()->user();
         // return $profile;
@@ -158,7 +162,7 @@ class HomeController extends Controller
     {
         $user=User::find($id);
         //return $user;
-        return view('user.noOfUser.show')->with('User',$user);
+        return view('user.noOfUser.show')->with('user',$user);
     }
     public function orderShow($id)
     {
