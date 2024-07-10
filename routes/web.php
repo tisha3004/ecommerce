@@ -79,6 +79,11 @@ Route::post('/add-to-cart', [CartController::class, 'singleAddToCart'])->name('s
 Route::get('cart-delete/{id}', [CartController::class, 'cartDelete'])->name('cart-delete');
 Route::post('cart-update', [CartController::class, 'cartUpdate'])->name('cart.update');
 
+
+//order history
+Route::get('/order-history', [OrderController::class, 'history'])->name('order.history')->middleware(CheckUserSession::class);
+
+
 Route::get('/cart', function () {
     return view('frontend.pages.cart');
 })->name('cart');
@@ -106,7 +111,7 @@ Route::post('product/track/order', [OrderController::class, 'productTrackOrder']
 
 
 //edit profile
-Route::get('/user/edit', [FrontendController::class, 'editUser'])->name('user.edit');
+Route::get('/user/edit', [FrontendController::class, 'editUser'])->name('user.edit1');
 Route::post('/user/edit/{id}', [FrontendController::class, 'editUserSubmit'])->name('userEdit.submit');
 
 
@@ -147,39 +152,68 @@ Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]]
      Route::get('/', [HomeController::class, 'index'])->name('user');
     Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
     Route::post('/profile/{id}', [HomeController::class, 'profileUpdate'])->name('user-profile-update');
+
+    //order Details
     Route::get('/order', [HomeController::class, 'orderIndex'])->name('user.order.index');
+    Route::get('/order/show/{id}', [HomeController::class, 'orderShow'])->name('user.order.show');
+    Route::delete('/order/delete/{id}', [HomeController::class, 'userOrderDelete'])->name('user.order.delete');
+
+    //Users
     Route::get('/user', [UsersController::class, 'index'])->name('user.noOfUser.index');
+    Route::get('/add-user', [UsersController::class, 'create'])->name('user.add');
+    Route::post('/add-user', [UsersController::class, 'store'])->name('user.store');
+    Route::get('/edit-Users', [UsersController::class, 'edit'])->name('user.edit');
+    Route::post('/edit-Users/{id}', [UsersController::class, 'store'])->name('user.update');
+    Route::get('/user/show/{id}', [UsersController::class, 'edit'])->name('user.show');
+    Route::post('/user/show/{id}', [UsersController::class, 'update'])->name('users.update');
+    Route::delete('/delete/{id}', [HomeController::class, 'userDelete'])->name('user.delete');
+  
+
+    //Banner Details
     Route::get('/banner', [HomeController::class, 'bannerIndex'])->name('user.banner.index');
+    Route::get('/add-banner', [HomeController::class, 'addBanner'])->name('user.banner.add');
+    Route::post('/add-banner', [BannerController::class, 'store'])->name('user.banner.store');
+    Route::get('/edit-banner/{id}', [BannerController::class, 'edit'])->name('user.banner.edit');
+    Route::post('/edit-banner/{id}', [BannerController::class, 'store'])->name('user.banner.update');
+
+
+      //coupon Details
+      Route::get('/coupon', [CouponController::class, 'index'])->name('user.coupon.index');
+      Route::get('/add-coupon', [CouponController::class, 'create'])->name('user.coupon.add');
+      Route::post('/add-coupon', [CouponController::class, 'store'])->name('user.coupon.store');
+      Route::get('/edit-coupon/{id}', [CouponController::class, 'edit'])->name('user.coupon.edit');
+      Route::post('/edit-coupon/{id}', [CouponController::class, 'store'])->name('user.coupon.update');
+      Route::delete('/delete-coupon/{id}', [CouponController::class, 'destroy'])->name('user.coupon.destroy');
+  
+    //Blogs
     Route::get('/blog', [HomeController::class, 'blogIndex'])->name('user.blog.index');
     Route::get('/edit-blog/{id}', [PostController::class, 'edit'])->name('blog.edit');
     Route::post('/update-blog', [PostController::class, 'store'])->name('user.blog.edit');
     Route::get('/add-blog', [HomeController::class, 'addBlog'])->name('user.blog.add');
     Route::post('/add-blog', [PostController::class, 'store'])->name('user.blog.store');
-    Route::get('/add-banner', [HomeController::class, 'addBanner'])->name('user.banner.add');
-    Route::post('/add-banner', [BannerController::class, 'store'])->name('user.banner.store');
-    Route::get('/edit-banner/{id}', [BannerController::class, 'edit'])->name('user.banner.edit');
-    Route::post('/edit-banner/{id}', [BannerController::class, 'store'])->name('user.banner.update');
-    Route::get('/products', [HomeController::class, 'productIndex'])->name('user.product.index');
+   
+    //Payment
     Route::get('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index');
     Route::get('/payment-detail/{id}',[HomeController::class,'paymentDetail'])->name('payment.detail');
     Route::post('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index1');
 
-
+    //Categories
     Route::get('/category', [CategoryController::class, 'index'])->name('user.category.index');
-    Route::get('/edit-category/{id}', [PostController::class, 'edit'])->name('category.edit');
-    Route::post('/update-category', [PostController::class, 'store'])->name('user.category.edit');
-    Route::get('/add-category', [HomeController::class, 'addcategory'])->name('user.category.add');
-    Route::post('/add-category', [PostController::class, 'store'])->name('user.category.store');
+    Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/update-category', [CategoryController::class, 'store'])->name('user.category.edit');
+    Route::get('/add-category', [CategoryController::class, 'create'])->name('user.category.add');
+    Route::post('/add-category', [CategoryController::class, 'store'])->name('user.category.update');
+
+    //products
+    Route::get('/products', [ProductController::class, 'index'])->name('user.product.index');
     Route::get('/add-product', [ProductController::class, 'addProduct'])->name('user.product.add');
     Route::get('/edit-product/{id}', [ProductController::class, 'editProduct'])->name('user.product.edit1');
     Route::post('/edit-product/{id}', [ProductController::class, 'update'])->name('user.product.edit');
     Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('user.product.delete');
     Route::post('/add-product', [ProductController::class, 'store'])->name('user.product.store');
-    Route::get('/order/show/{id}', [HomeController::class, 'orderShow'])->name('user.order.show');
-    Route::get('/user/show/{id}', [UsersController::class, 'edit'])->name('user.show');
-    Route::post('/user/show/{id}', [UsersController::class, 'update'])->name('users.update');
-    Route::delete('/delete/{id}', [HomeController::class, 'userDelete'])->name('user.delete');
-    Route::delete('/order/delete/{id}', [HomeController::class, 'userOrderDelete'])->name('user.order.delete');
+    
+    
+   //Reviews
     Route::get('/user-review', [HomeController::class, 'productReviewIndex'])->name('user.productreview.index');
     Route::delete('/user-review/delete/{id}', [HomeController::class, 'productReviewDelete'])->name('user.productreview.delete');
     Route::get('/user-review/edit/{id}', [HomeController::class, 'productReviewEdit'])->name('user.productreview.edit');
@@ -188,6 +222,8 @@ Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]]
     Route::delete('user-post/comment/delete/{id}', [HomeController::class, 'userCommentDelete'])->name('user.post-comment.delete');
     Route::get('user-post/comment/edit/{id}', [HomeController::class, 'userCommentEdit'])->name('user.post-comment.edit');
     Route::patch('user-post/comment/update/{id}', [HomeController::class, 'userCommentUpdate'])->name('user.post-comment.update');
+   
+    //Change Passwords   
     Route::get('change-password', [HomeController::class, 'changePassword'])->name('user.change.password.form');
     Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password'); 
 });

@@ -90,7 +90,7 @@ class CategoryController extends Controller
     {
         $parent_cats=Category::where('is_parent',1)->get();
         $category=Category::findOrFail($id);
-        return view('backend.category.edit')->with('category',$category)->with('parent_cats',$parent_cats);
+        return view('user.category.edit')->with('category',$category)->with('parent_cats',$parent_cats);
     }
 
     /**

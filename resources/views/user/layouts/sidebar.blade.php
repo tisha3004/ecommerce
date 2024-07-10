@@ -71,6 +71,12 @@
             <i class="fas fa-box-open"></i>
             <span>Products</span></a>
     </li>
+      <!-- Coupons -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('user.coupon.index')}}">
+            <i class="fas fa-box-open"></i>
+            <span>Coupons</span></a>
+    </li>
       <!-- Payment -->
       <li class="nav-item">
         <a class="nav-link" href="{{route('user.payment.index')}}">

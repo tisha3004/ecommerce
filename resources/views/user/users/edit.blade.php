@@ -36,7 +36,7 @@
         <label for="inputPhoto" class="col-form-label">Photo</label>
         <div class="input-group">
             <span class="input-group-btn">
-                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
                 <i class="fa fa-picture-o"></i> Choose
                 </a>
             </span>

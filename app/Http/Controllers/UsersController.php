@@ -27,7 +27,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('backend.users.create');
+        return view('user.users.create');
     }
 
     /**
@@ -59,7 +59,7 @@ class UsersController extends Controller
         else{
             request()->session()->flash('error','Error occurred while adding user');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('user.noOfUser.index');
 
     }
 

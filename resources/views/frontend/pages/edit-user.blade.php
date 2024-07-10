@@ -11,7 +11,7 @@
                     <div class="bread-inner">
                         <ul class="bread-list">
                             <li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
-                            <li><a href="{{route('user.edit')}}">Edit Profile</a></li>
+                            <li><a href="{{route('user.edit1')}}">Edit Profile</a></li>
                         </ul>
                     </div>
                 </div>

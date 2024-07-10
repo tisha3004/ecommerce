@@ -1,11 +1,11 @@
-@extends('backend.layouts.master')
+@extends('user.layouts.master')
 
 @section('main-content')
 
 <div class="card">
     <h5 class="card-header">Add User</h5>
     <div class="card-body">
-      <form method="post" action="{{route('users.store')}}">
+      <form method="post" action="{{route('user.store')}}">
         {{csrf_field()}}
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Name</label>
@@ -35,7 +35,7 @@
         <label for="inputPhoto" class="col-form-label">Photo</label>
         <div class="input-group">
             <span class="input-group-btn">
-                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
                 <i class="fa fa-picture-o"></i> Choose
                 </a>
             </span>
@@ -72,7 +72,7 @@
           @enderror
           </div>
         <div class="form-group mb-3">
-          <button type="reset" class="btn btn-warning">Reset</button>
+         
            <button class="btn btn-success" type="submit">Submit</button>
         </div>
       </form>

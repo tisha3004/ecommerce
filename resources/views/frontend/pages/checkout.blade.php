@@ -162,9 +162,9 @@
         <form-group>
             <input name="payment_method"  type="radio" value="cod" required> <label> Cash On Delivery</label><br>
             <!-- <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label><br> -->
-            <input name="payment_method"  type="radio" value="cardpay" required> <label> Card Payment</label><br>
+           <!--  <input name="payment_method"  type="radio" value="cardpay" required> <label> Card Payment</label><br>
             
-            <!-- Credit Card Details -->
+             Credit Card Details 
             <div id="creditCardDetails" style="display: none;">
                 <label for="cardNumber">Card Number:</label>
                 <input type="text" id="cardNumber" name="card_number" maxlength="16"><br>
@@ -177,7 +177,7 @@
                 
                 <label for="cvv">CVV:</label>
                 <input type="text" id="cvv" name="cvv" maxlength="3"><br>
-            </div>
+            </div> -->
         </form-group>
     </div>
 </div>

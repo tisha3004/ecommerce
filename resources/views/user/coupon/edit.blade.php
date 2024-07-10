@@ -1,13 +1,13 @@
-@extends('backend.layouts.master')
+@extends('user.layouts.master')
 
 @section('main-content')
 
 <div class="card">
     <h5 class="card-header">Edit Coupon</h5>
     <div class="card-body">
-      <form method="post" action="{{route('coupon.update',$coupon->id)}}">
+      <form method="post" action="{{route('user.coupon.update',$coupon->id)}}">
         @csrf 
-        @method('PATCH')
+        @method('POST')
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Coupon Code <span class="text-danger">*</span></label>
           <input id="inputTitle" type="text" name="code" placeholder="Enter Coupon Code"  value="{{$coupon->code}}" class="form-control">
@@ -16,7 +16,7 @@
           @enderror
           </div>
   
-          <div class="form-group"><!-- Visit 'codeastro' for more projects -->
+          <div class="form-group">
               <label for="type" class="col-form-label">Type <span class="text-danger">*</span></label>
               <select name="type" class="form-control">
                   <option value="fixed" {{(($coupon->type=='fixed') ? 'selected' : '')}}>Fixed</option>
@@ -35,7 +35,7 @@
               @enderror
           </div>
           
-        <div class="form-group"><!-- Visit 'codeastro' for more projects -->
+        <div class="form-group">
           <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
           <select name="status" class="form-control">
             <option value="active" {{(($coupon->status=='active') ? 'selected' : '')}}>Active</option>

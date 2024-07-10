@@ -61,33 +61,7 @@ class OrderController extends Controller
             request()->session()->flash('error','Cart is Empty !');
             return back();
         }
-        // $cart=Cart::get();
-        // // return $cart;
-        // $cart_index='ORD-'.strtoupper(uniqid());
-        // $sub_total=0;
-        // foreach($cart as $cart_item){
-        //     $sub_total+=$cart_item['amount'];
-        //     $data=array(
-        //         'cart_id'=>$cart_index,
-        //         'user_id'=>$request->user()->id,
-        //         'product_id'=>$cart_item['id'],
-        //         'quantity'=>$cart_item['quantity'],
-        //         'amount'=>$cart_item['amount'],
-        //         'status'=>'new',
-        //         'price'=>$cart_item['price'],
-        //     );
-
-        //     $cart=new Cart();
-        //     $cart->fill($data);
-        //     $cart->save();
-        // }
-
-        // $total_prod=0;
-        // if(session('cart')){
-        //         foreach(session('cart') as $cart_items){
-        //             $total_prod+=$cart_items['quantity'];
-        //         }
-        // }
+        
 
         $order=new Order();
         $order_data=$request->all();
@@ -144,7 +118,7 @@ class OrderController extends Controller
         $users=User::where('role','admin')->first();
         $details=[
             'title'=>'New Order Received',
-            'actionURL'=>route('order.show',$order->id),
+            'actionURL'=>route('user.order.show',$order->id),
             'fas'=>'fa-file-alt'
         ];
         // Notification::send($users, new StatusNotification($details));
@@ -159,7 +133,9 @@ class OrderController extends Controller
 
         // dd($users);        
         request()->session()->flash('success','Your product order has been placed. Thank you for shopping with us.');
-        return redirect()->route('home1');
+        //return redirect()->route('home1');
+        //return $order_data;
+       return view ('frontend.pages.order-sucess')->with('order_data',$order_data);
     }
 
     /**
@@ -282,14 +258,26 @@ class OrderController extends Controller
     }
 
     // PDF generate
-    public function pdf(Request $request){
-        $order=Order::getAllOrder($request->id);
+    public function pdf(Request $request, $id){
+        $order=Order::getAllOrder($id);
         // return $order;
         $file_name=$order->order_number.'-'.$order->first_name.'.pdf';
         // return $file_name;
         $pdf=PDF::loadview('backend.order.pdf',compact('order'));
         return $pdf->download($file_name);
     }
+
+    //order history of user
+    public function history(Request $request)
+    {
+        $history = Order::orderBy('id', 'DESC')->where('user_id', auth()->user()->id)->get();
+        //return $history;
+        return view ('frontend.pages.order-history')->with('history',$history);        
+    }
+    
+
+
+    
     // Income chart
     public function incomeChart(Request $request){
         $year=\Carbon\Carbon::now()->year;

@@ -17,7 +17,7 @@ class CouponController extends Controller
     public function index()
     {
         $coupon=Coupon::orderBy('id','DESC')->paginate('10');
-        return view('backend.coupon.index')->with('coupons',$coupon);
+        return view('user.coupon.index')->with('coupons',$coupon);
     }
 
     /**
@@ -27,7 +27,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('backend.coupon.create');
+        return view('user.coupon.create');
     }
 
     /**
@@ -53,7 +53,7 @@ class CouponController extends Controller
         else{
             request()->session()->flash('error','Please try again!!');
         }
-        return redirect()->route('coupon.index');
+        return redirect()->route('user.coupon.index');
     }
 
     /**
@@ -76,10 +76,10 @@ class CouponController extends Controller
     {
         $coupon=Coupon::find($id);
         if($coupon){
-            return view('backend.coupon.edit')->with('coupon',$coupon);
+            return view('user.coupon.edit')->with('coupon',$coupon);
         }
         else{
-            return view('backend.coupon.index')->with('error','Coupon not found');
+            return view('user.coupon.index')->with('error','Coupon not found');
         }
     }
 
@@ -108,7 +108,7 @@ class CouponController extends Controller
         else{
             request()->session()->flash('error','Please try again!!');
         }
-        return redirect()->route('coupon.index');
+        return redirect()->route('user.coupon.index');
         
     }
 
@@ -129,7 +129,7 @@ class CouponController extends Controller
             else{
                 request()->session()->flash('error','Error, Please try again');
             }
-            return redirect()->route('coupon.index');
+            return redirect()->route('user.coupon.index');
         }
         else{
             request()->session()->flash('error','Coupon not found');

@@ -28,7 +28,8 @@
                                
                                 @else 
                                 <li><i class="fa fa-truck"></i> <a href="{{route('order.track')}}">Track Order</a></li>
-                                <li><i class="fa fa-user"></i> <a href="{{route('user.edit')}}">Edit Profile</a></li>
+                                <li><i class="fa fa-box"></i> <a href="{{route('order.history')}}"> Order History</a></li>
+                                <li><i class="fa fa-user"></i> <a href="{{route('user.edit1')}}">Edit Profile</a></li>
     
                                  @endif
                                 <li><i class="ti-power-off"></i> <a href="{{route('user.logout')}}">Logout</a></li>
