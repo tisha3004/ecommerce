@@ -125,17 +125,14 @@
         </div>
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
-          <div class="input-group">
-              <span class="input-group-btn">
-                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
-                  <i class="fas fa-image"></i> Choose
-                  </a>
-              </span>
-          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$product->photo}}">
-        </div>
-        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+          <input type="file" id="inputPhoto" name="photo" class="form-control">
+          <div style="margin-top:15px;">
+              @if($product->photo)
+                  <img src="{{ asset('storage/' . $product->photo) }}" style="max-height: 100px;">
+              @endif
+          </div>
           @error('photo')
-          <span class="text-danger">{{$message}}</span>
+          <span class="text-danger">{{ $message }}</span>
           @enderror
         </div>
         

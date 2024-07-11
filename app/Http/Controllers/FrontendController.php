@@ -423,19 +423,20 @@ class FrontendController extends Controller
     }
     public function editUserSubmit(Request $request,$id){
          //return $request->all();
+        // return $id;
         $this->validate($request,[
             'name'=>'string|required|min:2',
-            'email'=>'string|required|unique:users,email',
+            'email'=>'string|required',
         ]);
         $data=$request->all();
         // dd($data);
+       // return $data;
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->photo=$request->photo;
         $user->save();
 
-        // Redirect back or to a specific route
         return redirect()->route('home1')->with('success', 'User updated successfully'); 
     }       
        

@@ -51,17 +51,18 @@ class PostController extends Controller
             'summary' => 'required',
             'description' => 'required',
             'quote' => 'nullable',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // adjust file size and types as needed
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
             'tags' => 'nullable|string',
             'post_category_id' => 'required|exists:post_categories,id',
             'post_tag_id' => 'nullable|exists:post_tags,id',
-            'status' => 'required', // adjust statuses as needed
+            'status' => 'required',
         ]);
         /* return "data validated"; */
         // Handle photo upload if provided
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'storage'); // adjust storage path as needed
+            $photoPath = $request->file('photo')->store('/storage/blogs', 'public');
+            $photoUrl = str_replace('public', 'storage', $photoPath);
         }
 
         // Create the post
@@ -71,7 +72,12 @@ class PostController extends Controller
         $post->summary = $request->summary;
         $post->description = $request->description;
         $post->quote = $request->quote;
-        $post->photo = $photoPath;
+        if ($request->hasFile('photo')) {
+            /* $photoPath = $request->file('photo')->store('/storage/blogs', 'public');
+            $photoUrl = str_replace('public', 'storage', $photoPath); */
+            $post->photo = $request->photo;
+        }
+      
         $post->tags = $request->tags;
         $post->post_cat_id = $request->post_category_id;
         $post->post_tag_id = $request->post_tag_id;
@@ -117,40 +123,44 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post=Post::findOrFail($id);
-         // return $request->all();
-         $this->validate($request,[
-            'title'=>'string|required',
-            'quote'=>'string|nullable',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|nullable',
-            'tags'=>'nullable',
-            'added_by'=>'nullable',
-            'post_cat_id'=>'required',
-            'status'=>'required|in:active,inactive'
-        ]);
+    $post = Post::findOrFail($id);
 
-        $data=$request->all();
-        $tags=$request->input('tags');
-        // return $tags;
-        if($tags){
-            $data['tags']=implode(',',$tags);
-        }
-        else{
-            $data['tags']='';
-        }
-        // return $data;
+    // Validate the request
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'quote' => 'nullable|string',
+        'summary' => 'required|string',
+        'description' => 'nullable|string',
+        'post_cat_id' => 'required|integer',
+        'tags' => 'nullable|array',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'status' => 'required|in:active,inactive',
+    ]);
 
-        $status=$post->fill($data)->save();
-        if($status){
-            request()->session()->flash('success','Post updated');
+    // Handle file upload
+    if ($request->hasFile('photo')) {
+        // Delete old photo if exists
+        if ($post->photo) {
+            Storage::delete( $post->photo);
         }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
-        return redirect()->route('post.index');
+        $photoPath = $request->file('photo')->store('public/blogs');
+        $post->photo = str_replace( $photoPath);
     }
+
+    // Update post
+    $post->title = $request->title;
+    $post->quote = $request->quote;
+    $post->summary = $request->summary;
+    $post->description = $request->description;
+    $post->post_cat_id = $request->post_cat_id;
+    $post->tags = implode(',', $request->tags);
+    $post->added_by = $request->added_by;
+    $post->status = $request->status;
+
+    $post->save();
+
+    return redirect()->route('user.blog.index')->with('success', 'Post updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -170,6 +180,6 @@ class PostController extends Controller
         else{
             request()->session()->flash('error','Error while deleting post ');
         }
-        return redirect()->route('post.index');
+        return redirect()->route('user.blog.index');
     }
 }

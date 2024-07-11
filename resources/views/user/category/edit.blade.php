@@ -7,7 +7,7 @@
     <div class="card-body">
       <form method="post" action="{{route('user.category.update',$category->id)}}">
         @csrf 
-        @method('PATCH')
+        @method('POST')
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
           <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{$category->title}}" class="form-control">
@@ -41,20 +41,16 @@
               @endforeach
           </select>
         </div>
-
         <div class="form-group">
-          <label for="inputPhoto" class="col-form-label">Photo</label>
-          <div class="input-group">
-              <span class="input-group-btn">
-                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
-                  <i class="fa fa-picture-o"></i> Choose
-                  </a>
-              </span>
-          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$category->photo}}">
-        </div>
-        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+          <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
+          <input type="file" id="inputPhoto" name="photo" class="form-control">
+          <div style="margin-top:15px;">
+              @if($category->photo)
+                  <img src="{{ $category->photo }}" style="max-height: 100px;">
+              @endif
+          </div>
           @error('photo')
-          <span class="text-danger">{{$message}}</span>
+          <span class="text-danger">{{ $message }}</span>
           @enderror
         </div>
         

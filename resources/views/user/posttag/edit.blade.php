@@ -7,7 +7,7 @@
     <div class="card-body">
       <form method="post" action="{{route('post-tag.update',$postTag->id)}}">
         @csrf 
-        @method('PATCH')
+        @method('POST')
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title</label>
           <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{$postTag->title}}" class="form-control">

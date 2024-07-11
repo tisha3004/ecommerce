@@ -79,6 +79,39 @@ Route::post('/add-to-cart', [CartController::class, 'singleAddToCart'])->name('s
 Route::get('cart-delete/{id}', [CartController::class, 'cartDelete'])->name('cart-delete');
 Route::post('cart-update', [CartController::class, 'cartUpdate'])->name('cart.update');
 
+//Terms and conditions
+Route::get('/terms-and-conditions',function(){
+    return view('frontend.pages.terms-and-conditions');
+})->name('terms');
+
+
+//FAQ
+Route::get('/faq',function(){
+    return view('frontend.pages.faq');
+})->name('faq');
+
+
+//Privacy Policy
+Route::get('/privacy-policy',function(){
+    return view('frontend.pages.privacyPolicy');
+})->name('privacy');
+
+
+//Return Policy
+Route::get('/return-policy',function(){
+    return view('frontend.pages.returnPolicy');
+})->name('return');
+
+
+//Shipping Policy
+Route::get('/shipping-policy',function(){
+    return view('frontend.pages.shipping');
+})->name('shipping');
+
+//Payment
+Route::get('/payment1',function(){
+    return view('frontend.pages.payment');
+})->name('payment1');
 
 //order history
 Route::get('/order-history', [OrderController::class, 'history'])->name('order.history')->middleware(CheckUserSession::class);
@@ -188,9 +221,10 @@ Route::group(['prefix' => 'user'], /* 'middleware' => [CheckUserSession::class]]
     //Blogs
     Route::get('/blog', [HomeController::class, 'blogIndex'])->name('user.blog.index');
     Route::get('/edit-blog/{id}', [PostController::class, 'edit'])->name('blog.edit');
-    Route::post('/update-blog', [PostController::class, 'store'])->name('user.blog.edit');
+    Route::post('/update-blog', [PostController::class, 'update'])->name('user.blog.edit');
     Route::get('/add-blog', [HomeController::class, 'addBlog'])->name('user.blog.add');
     Route::post('/add-blog', [PostController::class, 'store'])->name('user.blog.store');
+    Route::delete('/delete-blog/{id}', [PostController::class, 'destroy'])->name('user.blog.delete');
    
     //Payment
     Route::get('/payment', [HomeController::class, 'paymentIndex'])->name('user.payment.index');
