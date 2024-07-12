@@ -17,6 +17,7 @@
                             <tr>
                                 <th>Order Number</th>
                                 <th>Date</th>
+                                <th>Address</th>
                                 <th>Total Amount</th>
                                 <th>Payment Status</th>
                                 <th>Order Status</th>
@@ -27,6 +28,7 @@
                             <tr>
                                 <td>{{ $order->order_number }}</td>
                                 <td>{{ $order->created_at->format('d-M-Y H:i:s') }}</td>
+                                <td>{{ $order->address1}} {{ $order->address2 }}</td>
                                 <td>${{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{ $order->payment_status }}</td>
                                 <td>{{ $order->status}}</td>

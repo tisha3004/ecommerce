@@ -3,33 +3,24 @@
 @section('main-content')
 <!-- Slider Area -->
 @if(count($banners)>0)
-    <section id="Gslider" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
+    <section id="banner-showcase" class="fullscreen-banner">
+        <div class="banner-carousel owl-carousel">
             @foreach($banners as $key=>$banner)
-        <li data-target="#Gslider" data-slide-to="{{$key}}" class="{{(($key==0)? 'active' : '')}}"></li>
-            @endforeach
-
-        </ol>
-        <div class="carousel-inner" role="listbox">
-                @foreach($banners as $key=>$banner)
-                <div class="carousel-item {{(($key==0)? 'active' : '')}}">
-                    <img class="first-slide" src="{{$banner->photo}}" alt="First slide">
-                    <div class="carousel-caption d-none d-md-block text-left">
-                        <h1 class="wow fadeInDown">{{$banner->title}}</h1>
-                        <p>{!! html_entity_decode($banner->description) !!}</p>
-                        <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" onclick="addToCart()" role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
+                <div class="banner-slide" style="background-image: url('{{$banner->photo}}');">
+                    <div class="banner-content">
+                        <h1 class="banner-title animated fadeInDown">{{$banner->title}}</h1>
+                        <p class="banner-description animated fadeInUp">{!! html_entity_decode($banner->description) !!}</p>
+                        <a class="btn btn-lg banner-cta animated zoomIn" href="{{route('product-grids')}}" onclick="addToCart()">
+                            Explore Now <i class="fas fa-chevron-right"></i>
+                        </a>
                     </div>
                 </div>
             @endforeach
         </div>
-        <a class="carousel-control-prev" href="#Gslider" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#Gslider" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-        </a>
+        <div class="banner-nav">
+            <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+            <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+        </div>
     </section>
 @endif
 
@@ -519,49 +510,149 @@
 @endsection
 
 @push('styles')
-    <style>
-        /* Banner Sliding */
-        #Gslider .carousel-inner {
-        background: #000000;
-        color:black;
-        }
+<style>
+    /* Immersive Banner Styles */
+    .fullscreen-banner {
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+    .banner-slide {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .banner-content {
+        text-align: center;
+        color: #fff;
+        max-width: 800px;
+        padding: 20px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 10px;
+    }
+    .banner-title {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
+    .banner-description {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+    .banner-cta {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+        border-radius: 50px;
+        background: #F7941D;
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+    .banner-cta:hover {
+        background: #fff;
+        color: #F7941D;
+    }
+    .banner-nav {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .banner-nav button {
+        background: rgba(255,255,255,0.5);
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .banner-nav button:hover {
+        background: #F7941D;
+        color: #fff;
+    }
 
-        #Gslider .carousel-inner{
-        height: 550px;
-        }
-        #Gslider .carousel-inner img{
-            width: 100% !important;
-            opacity: .8;
-        }
-
-        #Gslider .carousel-inner .carousel-caption {
-        bottom: 60%;
-        }
-
-        #Gslider .carousel-inner .carousel-caption h1 {
-        font-size: 50px;
-        font-weight: bold;
-        line-height: 100%;
-        /* color: #F7941D; */
-        color: #1e1e1e;
-        }
-
-        #Gslider .carousel-inner .carousel-caption p {
-        font-size: 18px;
-        color: black;
-        margin: 28px 0 28px 0;
-        }
-
-        #Gslider .carousel-indicators {
-        bottom: 70px;
-        }
-    </style>
+    /* Dynamic Category Showcase Styles */
+    .category-card {
+        margin-bottom: 30px;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .category-image {
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        transition: all 0.5s ease;
+    }
+    .category-image:hover {
+        transform: scale(1.05);
+    }
+    .category-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    .category-card:hover .category-overlay {
+        opacity: 1;
+    }
+    .category-title {
+        color: #fff;
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    .category-link {
+        color: #fff;
+        padding: 10px 20px;
+        border: 2px solid #fff;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+    .category-link:hover {
+        background: #fff;
+        color: #000;
+    }
+</style>
 @endpush
 
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.banner-carousel').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: false,
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            animateOut: 'fadeOut'
+        });
 
+        $('.prev-slide').click(function() {
+            $('.banner-carousel').trigger('prev.owl.carousel');
+        });
+
+        $('.next-slide').click(function() {
+            $('.banner-carousel').trigger('next.owl.carousel');
+        });
+    });
+
+  
         /*==================================================================
         [ Isotope ]*/
         var $topeContainer = $('.isotope-grid');

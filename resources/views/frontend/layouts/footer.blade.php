@@ -9,7 +9,7 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<a href="index.html"><img src="{{asset('backend/img/avatar.png')}}" alt="#"></a>
+								<a href="{{route('home1')}}"><img src="{{asset('backend/img/avatar.png')}}" alt="#"></a>
 							</div>
 							@php
 								$settings=DB::table('settings')->get();
@@ -38,8 +38,8 @@
 						<div class="single-footer links">
 							<h4>Customer Service</h4>
 							<ul>
-								<li><a href="{{route('payment1')}}">Payment Methods</a></li>
-								<li><a href="#">Money-back</a></li>
+								<li><a href="{{route('payment-methods')}}">Payment Methods</a></li>
+								<li><a href="{{route('moneyBack')}}">Money-back</a></li>
 								<li><a href="{{route('return')}}">Returns</a></li>
 								<li><a href="{{route('shipping')}}">Shipping</a></li>
 								<li><a href="{{route('privacy')}}">Privacy Policy</a></li>

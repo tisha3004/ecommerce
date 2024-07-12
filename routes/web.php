@@ -102,16 +102,27 @@ Route::get('/return-policy',function(){
     return view('frontend.pages.returnPolicy');
 })->name('return');
 
+//Help
+Route::get('/help',function(){
+    return view('frontend.pages.help');
+})->name('help');
+
 
 //Shipping Policy
 Route::get('/shipping-policy',function(){
     return view('frontend.pages.shipping');
 })->name('shipping');
 
-//Payment
-Route::get('/payment1',function(){
+
+//Money-back Policy
+Route::get('/money-back-policy',function(){
+    return view('frontend.pages.moneyBack');
+})->name('moneyBack');
+
+// Payment Methods
+Route::get('/payment-methods', function () {
     return view('frontend.pages.payment');
-})->name('payment1');
+})->name('payment-methods');
 
 //order history
 Route::get('/order-history', [OrderController::class, 'history'])->name('order.history')->middleware(CheckUserSession::class);
@@ -120,6 +131,10 @@ Route::get('/order-history', [OrderController::class, 'history'])->name('order.h
 Route::get('/cart', function () {
     return view('frontend.pages.cart');
 })->name('cart');
+
+Route::get('/edit-user', function () {
+    return view('frontend.pages.edit-user-main');
+})->name('edit');
 
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware(CheckUserSession::class);
 

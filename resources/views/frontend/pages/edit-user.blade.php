@@ -49,13 +49,7 @@
                                        
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Photo</label>
-                                        <input type="file" class="form-control-file" name="photo" value="{{$user->photo}}">
-                                      
-                                    </div>
-                                </div>
+                                
                                 <div class="col-12">
                                     <div class="form-group login-btn">
                                         <button class="btn btn-facebook" type="submit">Save</button>

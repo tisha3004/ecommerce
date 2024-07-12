@@ -410,11 +410,8 @@ class FrontendController extends Controller
 
     public function editUser(Request $request){
         $userId = Auth::id();
-
-        // Retrieve the user from the database
         $user = User::find($userId);
         if (!$user) {
-            // Handle case where user is not found
             return redirect()->back()->with('error', 'User not found.');
         }   
         //return $user;
@@ -434,7 +431,6 @@ class FrontendController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->photo=$request->photo;
         $user->save();
 
         return redirect()->route('home1')->with('success', 'User updated successfully'); 
