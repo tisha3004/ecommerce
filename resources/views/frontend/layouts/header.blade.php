@@ -6,6 +6,7 @@
                 <div class="col-lg-6 col-md-12 col-12">
                     <!-- Top Left -->
                     <div class="top-left">
+                        
                         <ul class="list-main">
                             @php
                                 $settings=DB::table('settings')->get();
@@ -21,6 +22,12 @@
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
+                        <!-- <li> Dark Mode
+                            <label class="switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="slider round"></span>
+                            </label>
+                            </li> -->
                             {{-- <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> --}}
                             @auth 
                                 @if(Auth::user()->role=='admin')
